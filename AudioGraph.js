@@ -12,6 +12,11 @@ var context = new AudioContext();
  * @param	expression	the function to base the audio graph on as a string
  */
 function AudioGraph(expression){
+	
+	var valid = validBrowser();
+	
+	if(valid != 1)
+		exit;
 
 	this.panX = -1;
 	this.panZ = 0;
@@ -26,7 +31,38 @@ function AudioGraph(expression){
 	this.getValues(expression);
 };
 
+/**
+ * Verifies if a valid browser is in use.
+ * 
+ */
+function validBrowser() {
+    var is_chrome = navigator.userAgent.indexOf('Chrome') > -1;
+    var is_explorer = navigator.userAgent.indexOf('MSIE') > -1;
+    var is_firefox = navigator.userAgent.indexOf('Firefox') > -1;
+    var is_safari = navigator.userAgent.indexOf("Safari") > -1;
+    var is_Opera = navigator.userAgent.indexOf("Presto") > -1;
 
+    var nav;
+
+    if(is_chrome)
+        nav = "Chrome";
+    if(is_firefox)
+        nav = "Firefox";
+    if(is_safari)
+        nav = "Safari";
+    if(is_chrome)
+        nav = "Chrome";
+
+    if(is_explorer) {
+        alert("Please, use another browser!");
+        exit;
+    }
+
+
+    alert("Your broswer is " + nav + ". You're good to go!");
+
+    return 1;
+}
 
 /**
  * Schedules the audio graph to be played on the web audio context.
