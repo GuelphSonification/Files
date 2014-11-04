@@ -50,8 +50,8 @@ function validBrowser() {
         nav = "Firefox";
     if(is_safari)
         nav = "Safari";
-    if(is_chrome)
-        nav = "Chrome";
+    if(is_Opera)
+        nav = "Opera";
 
     if(is_explorer) {
         alert("Please, use another browser!");
