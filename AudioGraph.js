@@ -46,11 +46,11 @@ function validBrowser() {
 
     if(is_chrome)
         nav = "Chrome";
-    if(is_firefox)
+    else if(is_firefox)
         nav = "Firefox";
-    if(is_safari)
+    else if(is_safari)
         nav = "Safari";
-    if(is_Opera)
+    else if(is_Opera)
         nav = "Opera";
 
     if(is_explorer) {
