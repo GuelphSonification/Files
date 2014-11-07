@@ -98,7 +98,7 @@ AudioGraph.prototype.play = function(duration){
 //	node_oscillator_high.start(startTime); // Play instantly
 //	node_oscillator_high.stop(endTime); // Stop after designated time period 
 
-	node_oscillator_low.type = 'square';
+	node_oscillator_low.type = 'triangle';
 	node_oscillator_low.start(startTime); // Play instantly
 	node_oscillator_low.stop(endTime); // Stop after designated time period
 
