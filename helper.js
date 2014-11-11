@@ -9,7 +9,7 @@ var audioGraph;
  * @param	div			div to create the button on
  */
 function addAudioGraph(expression, duration, div) {
-	audioGraph = new AudioGraph(expression);
+	audioGraph = new AudioGraph({type:"URL", value:expression});
 	var container = document.getElementById(div);
 	
 	var button = document.createElement("h3");
