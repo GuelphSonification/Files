@@ -27,8 +27,14 @@ function AudioGraph(expression){
 	this.nvalues = null;
 //	this.freqValuesHigh = null;
 	this.freqValuesLow = null;
-
-	this.getValues(expression);
+	if (expression.type == "URL")
+	{
+	  this.getValues(expression.value);
+	}
+	else if (expression.type == "RAW")
+	{
+    this.setValues(expression.value);
+	}
 };
 
 /**
