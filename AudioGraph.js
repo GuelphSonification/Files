@@ -66,7 +66,7 @@ function validBrowser() {
     }
 
 
-    alert("Your broswer is " + nav + ". You're good to go!");
+    //alert("Your broswer is " + nav + ". You're good to go!");
 
     return 1;
 }
