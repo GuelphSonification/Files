@@ -188,7 +188,7 @@ function generateJSON() {
     audioGraph = new AudioGraph({type:"RAW", value:jsonString});
     
     //audioGraph = new AudioGraph("jsonString");
-    audioGraph.play(6);
+    audioGraph.play(4);
     
 }
 
