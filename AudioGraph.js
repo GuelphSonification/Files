@@ -38,8 +38,6 @@ function AudioGraph(expression){
 	{
         this.setValues(expression.value);
 	}
-
-	ding.play(0);
 };
 
 /**
@@ -93,6 +91,7 @@ function loadDing() {
                         ding.buffer = buffer;
 
                         ding.connect(context.destination);
+                        ding.play(0);
                     },
                     function(error) {
                         console.error('decodeAudioData error', error);
