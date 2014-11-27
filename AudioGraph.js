@@ -175,6 +175,8 @@ AudioGraph.prototype.play = function(duration){
 	var endTime = startTime + duration;
 	var step = duration/this.nvalues; // set the amount to increment the timing by. based on the duration and the number of values being played.
 
+    console.log(this.freqValuesCross);
+
 	// rolled my own setValueCurveAtTime since setValueCurveAtTime glitches when played multiple times, dont know why...
 	for(var i = 0; i < this.nvalues; i++){
 		node_oscillator_high.frequency.setValueAtTime(this.freqValuesHigh[i],startTime+(step*i));
