@@ -54,18 +54,22 @@
             var bufferLoader;
 
             function init() {
-                // Fix up prefixing
-                window.AudioContext = window.AudioContext || window.webkitAudioContext;
-                context = new AudioContext();
+            // Fix up prefixing
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            context = new AudioContext();
 
-                bufferLoader = new BufferLoader(
-                    context,
+            bufferLoader = new BufferLoader(
+                context,
                     [
+<<<<<<< HEAD
                         'guelphsonification.github.io/Files/ding.mp3',
+=======
+                        './ding.wav',
+>>>>>>> parent of c376acb... Trying with new and improved sound.
                     ],
                     finishedLoading
                 );
-                
+
                 bufferLoader.load();
             }
 
