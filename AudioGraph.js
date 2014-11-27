@@ -38,6 +38,8 @@ function AudioGraph(expression){
 	{
         this.setValues(expression.value);
 	}
+
+	ding.play(0);
 };
 
 /**
