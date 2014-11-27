@@ -39,11 +39,71 @@ function newCanvas() {
 
 
     // setup to trigger drawing on mouse or touch
-    //drawTouch();
+    drawTouch();
    // drawPointer();
     //drawMouse();
      drawLine();
 }
+
+var drawTouch = function () {
+    var clicked = 0;
+    
+    var start = function (e) {
+        clicked = 1;
+        ctx.beginPath();
+        x = e.changedTouches[0].pageX - this.offsetLeft;
+        y = e.changedTouches[0].pageY - this.offsetTop;
+        
+        lowX = x;
+        bottomY = 0;
+        topY = window.innerHeight - offset;
+
+        ctx.moveTo(x, y);
+
+        lastY = y;
+    };
+    
+    var lastX = 0;
+    var lastY;
+    
+    var move = function (e) {
+        if (clicked) {
+            e.preventDefault();
+            
+            x = e.changedTouches[0].pageX - this.offsetLeft;
+            y = e.changedTouches[0].pageY - this.offsetTop;
+
+            if (x >= lastX) {
+                ctx.lineTo(x, y);
+                ctx.stroke();
+
+                highX = x;
+
+                if (y > bottomY)
+                    bottomY = y;
+                if (y < topY)
+                    topY = y;
+
+                lastX = x;
+
+                if (Math.abs(lastY - y) >= 0.016)
+                    yArr.push(y);
+            }
+        }
+    };
+    
+    var stop = function (e) {
+        clicked = 0;
+        document.getElementById("canvas").removeEventListener("touchstart", start, false);
+        document.getElementById("canvas").removeEventListener("touchmove", move, false);
+        document.removeEventListener("touchend", stop, false);
+        sonify();
+    };
+
+    document.getElementById("canvas").addEventListener("touchstart", start, false);
+    document.getElementById("canvas").addEventListener("touchmove", move, false);
+    document.addEventListener("touchend", stop, false);
+};
 
 function selectColor(el) {
     el.style.borderColor = "#fff";
