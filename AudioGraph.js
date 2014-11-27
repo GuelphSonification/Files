@@ -107,7 +107,7 @@ function decodeArrayBuffer(input) {
     decode(input, ab);
     
     return ab;
-},
+}
 
 function decode(input, arrayBuffer) {
     //get last chars to see if are valid
