@@ -91,7 +91,7 @@ function loadDing() {
                         ding.buffer = buffer;
 
                         ding.connect(context.destination);
-                        ding.play(0);
+                        ding.start(0);
                     },
                     function(error) {
                         console.error('decodeAudioData error', error);
