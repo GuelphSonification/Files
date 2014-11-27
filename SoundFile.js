@@ -60,6 +60,7 @@ bufferLoader = new BufferLoader(
         [
             'http://guelphsonification.github.io/Files/ding.wav',
         ],
+        finishedLoading
     );
 
     bufferLoader.load();
