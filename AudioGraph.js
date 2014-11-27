@@ -3,6 +3,7 @@
  */
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
+var ding = null;
 
 
 
@@ -17,6 +18,8 @@ function AudioGraph(expression){
 	if(valid != 1)
 		exit;
 
+    loadDing();
+
 	this.panX = -1;
 	this.panZ = 0;
 
@@ -29,11 +32,11 @@ function AudioGraph(expression){
 	
 	if (expression.type == "URL")
 	{
-	  this.getValues(expression.value);
+	    this.getValues(expression.value);
 	}
 	else if (expression.type == "RAW")
 	{
-    this.setValues(expression.value);
+        this.setValues(expression.value);
 	}
 };
 
@@ -69,6 +72,44 @@ function validBrowser() {
 
     return 1;
 }
+
+
+/**
+ * Loads the 'ding' sound effect from a file.
+ */
+function loadDing() {
+    // Fix up prefixing
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    context = new AudioContext();
+
+    // Load buffer asynchronously
+    var request = new XMLHttpRequest();
+    request.open("GET", 'http://guelphsonification.github.io/Files/ding.wav', true);
+    request.responseType = "arraybuffer";
+
+    request.onload = function() {
+        // Asynchronously decode the audio file data in request.response
+        context.decodeAudioData(
+            request.response,
+            function(buffer) {
+                ding = context.createBufferSource();
+                ding.buffer = buffer;
+
+                ding.connect(context.destination);
+            },
+            function(error) {
+                console.error('decodeAudioData error', error);
+            }
+        );
+    }
+
+    request.onerror = function() {
+        alert('BufferLoader: XHR error');
+    }
+
+    request.send();
+}
+
 
 /**
  * Schedules the audio graph to be played on the web audio context.

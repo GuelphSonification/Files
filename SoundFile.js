@@ -2,7 +2,7 @@ window.onload = init;
 var context;
 var bufferLoader;
 
-function init() {
+function loadDing() {
     // Fix up prefixing
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     context = new AudioContext();
@@ -17,11 +17,10 @@ function init() {
         context.decodeAudioData(
             request.response,
             function(buffer) {
-                var source1 = context.createBufferSource();
-                source1.buffer = buffer;
+                ding = context.createBufferSource();
+                ding.buffer = buffer;
 
-                source1.connect(context.destination);
-                source1.start(0);
+                ding.connect(context.destination);
             },
             function(error) {
                 console.error('decodeAudioData error', error);
