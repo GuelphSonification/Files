@@ -54,18 +54,18 @@
             var bufferLoader;
 
             function init() {
-            // Fix up prefixing
-            window.AudioContext = window.AudioContext || window.webkitAudioContext;
-            context = new AudioContext();
+                // Fix up prefixing
+                window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                context = new AudioContext();
 
-            bufferLoader = new BufferLoader(
-                context,
+                bufferLoader = new BufferLoader(
+                    context,
                     [
-                        './ding.wav',
+                        './ding.mp3',
                     ],
                     finishedLoading
                 );
-
+                
                 bufferLoader.load();
             }
 
