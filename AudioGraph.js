@@ -180,7 +180,7 @@ AudioGraph.prototype.play = function(duration){
 		node_oscillator_high.frequency.setValueAtTime(this.freqValuesHigh[i],startTime+(step*i));
 		node_oscillator_low.frequency.setValueAtTime(this.freqValuesLow[i],startTime+(step*i));
 		if (this.freqValuesCross[i] == 1)
-		    ding.start(startTime+(step*i));
+		    ding.noteOn(startTime+(step*i));
 	}
 
 	node_oscillator_high.type = 'sine';
