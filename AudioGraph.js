@@ -84,7 +84,7 @@ function loadDing() {
 
     // Load buffer asynchronously
     var request = new XMLHttpRequest();
-    request.open("GET", 'http://guelphsonification.github.io/Files/ding.wav', true);
+    request.open("GET", 'https://guelphsonification.github.io/Files/ding.wav', true);
     request.responseType = "arraybuffer";
 
     request.onload = function() {
