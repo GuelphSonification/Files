@@ -85,7 +85,7 @@ function loadDing() {
             function(response) {
                 console.log(response);
                 context.decodeAudioData(
-                    response.content,
+                    atob(response.content),
                     function(buffer) {
                         ding = context.createBufferSource();
                         ding.buffer = buffer;
