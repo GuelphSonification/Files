@@ -81,8 +81,22 @@ function loadDing() {
     // Load buffer asynchronously
     $.ajax({
         url : "https://api.github.com/repos/GuelphSonification/Files/contents/ding.wav",
-        success : function(buffer) { ding = context.createBufferSource(); ding.buffer = buffer.content; ding.connect(context.destination); }
-    })            
+        success :
+            function(response) {
+                context.decodeAudioData(
+                    response.content,
+                    function(buffer) {
+                        ding = context.createBufferSource();
+                        ding.buffer = buffer;
+
+                        ding.connect(context.destination);
+                    },
+                    function(error) {
+                        console.error('decodeAudioData error', error);
+                    }
+                );
+            }
+    });
 }
 
 
