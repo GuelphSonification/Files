@@ -17,10 +17,6 @@ function init() {
         context.decodeAudioData(
             request.response,
             function(buffer) {
-                if (!buffer) {
-                    alert('error decoding file data: ' + url);
-                    return;
-                }
                 var source1 = context.createBufferSource();
                 source1.buffer = buffer;
 
