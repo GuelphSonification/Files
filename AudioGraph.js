@@ -83,31 +83,10 @@ function loadDing() {
     context = new AudioContext();
 
     // Load buffer asynchronously
-    var request = new XMLHttpRequest();
-    request.open("GET", 'https://guelphsonification.github.io/Files/ding.wav', true);
-    request.responseType = "arraybuffer";
-
-    request.onload = function() {
-        // Asynchronously decode the audio file data in request.response
-        context.decodeAudioData(
-            request.response,
-            function(buffer) {
-                ding = context.createBufferSource();
-                ding.buffer = buffer;
-
-                ding.connect(context.destination);
-            },
-            function(error) {
-                console.error('decodeAudioData error', error);
-            }
-        );
-    }
-
-    request.onerror = function() {
-        alert('BufferLoader: XHR error');
-    }
-
-    request.send();
+    $.ajax({
+        url : "https://api.github.com/repos/GuelphSonification/Files/contents/ding.wav",
+        success : function(buffer) { ding = context.createBufferSource(); ding.buffer = buffer.content; ding.connect(context.destination); }
+    })            
 }
 
 
