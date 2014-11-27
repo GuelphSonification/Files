@@ -85,7 +85,7 @@ function loadDing() {
             function(response) {
                 console.log(response);
                 context.decodeAudioData(
-                    atob(response.content),
+                    str2ab(atob(response.content)),
                     function(buffer) {
                         ding = context.createBufferSource();
                         ding.buffer = buffer;
@@ -100,6 +100,14 @@ function loadDing() {
     });
 }
 
+function str2ab(str) {
+    var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+    var bufView = new Uint16Array(buf);
+    for (var i=0, strLen=str.length; i<strLen; i++) {
+        bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
+}
 
 /**
  * Schedules the audio graph to be played on the web audio context.
