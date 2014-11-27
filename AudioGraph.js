@@ -91,7 +91,6 @@ function loadDing() {
                         ding.buffer = buffer;
 
                         ding.connect(context.destination);
-                        ding.start(0);
                     },
                     function(error) {
                         console.error('decodeAudioData error', error);
@@ -182,7 +181,7 @@ AudioGraph.prototype.play = function(duration){
 		node_oscillator_high.frequency.setValueAtTime(this.freqValuesHigh[i],startTime+(step*i));
 		node_oscillator_low.frequency.setValueAtTime(this.freqValuesLow[i],startTime+(step*i));
 		if (this.freqValuesCross[i] == 1)
-		    ding.play(startTime+(step*i));
+		    ding.start(startTime+(step*i));
 	}
 
 	node_oscillator_high.type = 'sine';
