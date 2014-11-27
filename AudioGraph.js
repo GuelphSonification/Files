@@ -139,6 +139,8 @@ AudioGraph.prototype.play = function(duration){
 	for(var i = 0; i < this.nvalues; i++){
 		node_oscillator_high.frequency.setValueAtTime(this.freqValuesHigh[i],startTime+(step*i));
 		node_oscillator_low.frequency.setValueAtTime(this.freqValuesLow[i],startTime+(step*i));
+		if (this.freqValuesCross[i] == 1)
+		    ding.play(startTime+(step*i));
 	}
 
 	node_oscillator_high.type = 'sine';
