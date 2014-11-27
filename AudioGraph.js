@@ -11,8 +11,7 @@ var context = new AudioContext();
  *
  * @param	expression	the function to base the audio graph on as a string
  */
-function AudioGraph(expression){
-	
+function AudioGraph(expression){	
 	var valid = validBrowser();
 	
 	if(valid != 1)
@@ -166,8 +165,9 @@ AudioGraph.prototype.setValues = function(result){
 	this.data = result;
 	this.nvalues = result.values.length;
 
-	this.freqValuesHigh = new Float32Array(this.nvalues); // values to set the frequency to during playback
-	this.freqValuesLow = new Float32Array(this.nvalues); // values to set the frequency to during playback
+	this.freqValuesHigh = new Float32Array(this.nvalues);   // values to set the frequency to during playback
+	this.freqValuesLow = new Float32Array(this.nvalues);    // values to set the frequency to during playback
+	this.freqValuesCross = new Float32Array(this.nvalues);  // values to handle crossing the x-axis
 
 	// Sets the frequency and gain values based on the expression provided
 	for(var i = 0;i<this.nvalues; i++){
@@ -182,6 +182,13 @@ AudioGraph.prototype.setValues = function(result){
 				this.freqValuesLow[i] = offset + (this.data.values[i] * ratio);
 				this.freqValuesHigh[i] = 0;
 			}
+			
+			if (i > 0 && ((this.freqValuesLow[i-1] < 0 && this.freqValuesLow[i] >=0)
+		        || (this.freqValuesLow[i-1] > 0 && this.freqValuesLow[i] <= 0))) {
+                this.freqValuesCross[i] = 1;    
+            } else {
+                this.freqValuesCross[i] = 0;
+            }
 		} else {
 			if (this.data.minVal < 0) {
 				this.freqValuesLow[i] = 0;
@@ -190,6 +197,13 @@ AudioGraph.prototype.setValues = function(result){
 				this.freqValuesLow[i] = 0;
 				this.freqValuesHigh[i] = offset + (this.data.values[i] * ratio);
 			}
+
+			if (i > 0 && ((this.freqValuesHigh[i-1] < 0 && this.freqValuesHigh[i] >=0)
+		        || (this.freqValuesHigh[i-1] > 0 && this.freqValuesHigh[i] <= 0))) {
+                this.freqValuesCross[i] = 1;    
+            } else {
+                this.freqValuesCross[i] = 0;
+            }
 		}
 	}
 }
