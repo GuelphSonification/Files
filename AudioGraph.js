@@ -86,10 +86,7 @@ function loadDing() {
                 context.decodeAudioData(
                     decodeArrayBuffer(response.content),
                     function(buffer) {
-                        ding = context.createBufferSource();
-                        ding.buffer = buffer;
-
-                        ding.connect(context.destination);
+                        ding = buffer;
                     },
                     function(error) {
                         console.error('decodeAudioData error', error);
@@ -180,7 +177,13 @@ AudioGraph.prototype.play = function(duration){
 		node_oscillator_high.frequency.setValueAtTime(this.freqValuesHigh[i],startTime+(step*i));
 		node_oscillator_low.frequency.setValueAtTime(this.freqValuesLow[i],startTime+(step*i));
 		if (this.freqValuesCross[i] == 1)
-		    ding.noteOn(startTime+(step*i));
+        {
+            var playDing = context.createBufferSource();
+            playDing.buffer = ding;
+
+            playDing.connect(context.destination);
+		    playDing.noteOn(startTime+(step*i));
+        }
 	}
 
 	node_oscillator_high.type = 'sine';
