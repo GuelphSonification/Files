@@ -83,6 +83,7 @@ function loadDing() {
         url : "https://api.github.com/repos/GuelphSonification/Files/contents/ding.wav",
         success :
             function(response) {
+                Console.log(response);
                 context.decodeAudioData(
                     response.content,
                     function(buffer) {
