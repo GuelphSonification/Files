@@ -78,10 +78,6 @@ function validBrowser() {
  * Loads the 'ding' sound effect from a file.
  */
 function loadDing() {
-    // Fix up prefixing
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    context = new AudioContext();
-
     // Load buffer asynchronously
     $.ajax({
         url : "https://api.github.com/repos/GuelphSonification/Files/contents/ding.wav",
