@@ -182,6 +182,8 @@ AudioGraph.prototype.play = function(duration){
             var playDing = context.createBufferSource();
             playDing.buffer = ding;
 
+            console.log(playDing);
+
             playDing.connect(context.destination);
 		    playDing.noteOn(startTime+(step*i));
         }
