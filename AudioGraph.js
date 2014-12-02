@@ -177,7 +177,7 @@ AudioGraph.prototype.play = function(duration){
 	for(var i = 0; i < this.nvalues; i++){
 		node_oscillator_high.frequency.setValueAtTime(this.freqValuesHigh[i],startTime+(step*i));
 		node_oscillator_low.frequency.setValueAtTime(this.freqValuesLow[i],startTime+(step*i));
-		if (this.freqValuesCross[i] == 1)
+		/*if (this.freqValuesCross[i] == 1)
         {
             var playDing = context.createBufferSource();
             playDing.buffer = ding;
@@ -186,7 +186,7 @@ AudioGraph.prototype.play = function(duration){
 
             playDing.connect(context.destination);
 		    playDing.start(startTime+(step*i));
-        }
+        }*/
 	}
 
 	node_oscillator_high.type = 'sine';
