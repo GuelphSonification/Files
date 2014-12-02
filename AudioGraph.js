@@ -87,6 +87,7 @@ function loadDing() {
                     decodeArrayBuffer(response.content),
                     function(buffer) {
                         ding = buffer;
+                        console.log("Done loading sound!");
                     },
                     function(error) {
                         console.error('decodeAudioData error', error);
