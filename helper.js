@@ -21,7 +21,7 @@ function addAudioGraph(expression, duration, div) {
         if (!playing) {
             playing = 1;
             audioGraph.play(duration);
-            playing = 0;
+            setTimeout(function(){playing = 0;}, duration*1000);
         }
 	};
 	writeStyle();
