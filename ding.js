@@ -12,7 +12,6 @@ function loadDing(temp) {
                     function(buffer) {
                         temp.ding = buffer;
                         if (temp.onDone) { temp.onDone(temp.ding);}
-                        console.log("Done loading sound!");
                     },
                     function(error) {
                         console.error('decodeAudioData error', error);

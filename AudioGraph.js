@@ -104,9 +104,6 @@ AudioGraph.prototype.play = function(duration){
         {
             var playDing = context.createBufferSource();
             playDing.buffer = this.ding;
-
-            console.log(playDing);
-
             playDing.connect(context.destination);
 		    playDing.start(startTime+(step*i));
         }
