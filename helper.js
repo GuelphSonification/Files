@@ -13,7 +13,7 @@ function addAudioGraph(expression, duration, div) {
 	audioGraph = new AudioGraph({type:"URL", value:expression});
 	var container = document.getElementById(div);
 
-    function tempFunc() { this.ding = null; this.onDone = function(ding) { console.log("HERE"); audioGraph.ding = ding; }; } 
+    function tempFunc() { this.ding = null; this.onDone = function(ding) { audioGraph.ding = ding; }; } 
     temp = new tempFunc();
 	loadDing(temp);
 

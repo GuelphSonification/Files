@@ -11,7 +11,7 @@ function loadDing(temp) {
                     decodeArrayBuffer(response.content),
                     function(buffer) {
                         temp.ding = buffer;
-                        if (temp.onDone) { console.log("here"); temp.onDone();}
+                        if (temp.onDone) { temp.onDone(temp.ding);}
                         console.log("Done loading sound!");
                     },
                     function(error) {
