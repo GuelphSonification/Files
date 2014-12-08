@@ -19,9 +19,9 @@ function addAudioGraph(expression, duration, div) {
 	button.className = "PlayButton";
 	button.onclick = function() { // Note this is a function
         if (!playing) {
-            playing = 0;
-            audioGraph.play(duration);
             playing = 1;
+            audioGraph.play(duration);
+            playing = 0;
         }
 	};
 	writeStyle();
