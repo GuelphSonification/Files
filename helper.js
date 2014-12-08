@@ -11,6 +11,7 @@ var playing = 0;
  */
 function addAudioGraph(expression, duration, div) {
 	audioGraph = new AudioGraph({type:"URL", value:expression});
+	loadDing(audioGraph);
 	var container = document.getElementById(div);
 	
 	var button = document.createElement("h3");
