@@ -1,4 +1,5 @@
 var audioGraph;
+var playing = 0;
 
 /**
  * Creates a new audio graph object based on the function specified.
@@ -17,7 +18,11 @@ function addAudioGraph(expression, duration, div) {
 	button.id = expression;
 	button.className = "PlayButton";
 	button.onclick = function() { // Note this is a function
-		audioGraph.play(duration);
+        if (!playing) {
+            playing = 0;
+            audioGraph.play(duration);
+            playing = 1;
+        }
 	};
 	writeStyle();
 
