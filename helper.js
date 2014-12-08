@@ -62,8 +62,15 @@ function writeStyle() {
 			 "color: grey;",
          "}",
          "h3.PlayButtonDeactivated {",
+		     "display: none;",
+		     "font-size: 1.17em;",
              "background-color: white;",
              "color: grey;",
+			 "border: solid 2px black;",
+			 "border-radius: 5px;",
+			 "cursor: pointer;",
+			 "padding-left: 0.4em;",
+			 "width: 2.5em;",
          "}",
 		 "</style>"].join('\n');
 	document.write(text);
