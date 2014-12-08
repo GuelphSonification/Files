@@ -1,7 +1,7 @@
 /**
  * Loads the 'ding' sound effect from a file.
  */
-function loadDing(graph) {
+function loadDing(temp) {
     // Load buffer asynchronously
     $.ajax({
         url : "https://api.github.com/repos/GuelphSonification/Files/contents/ding.wav",
@@ -10,7 +10,8 @@ function loadDing(graph) {
                 context.decodeAudioData(
                     decodeArrayBuffer(response.content),
                     function(buffer) {
-                        graph.ding = buffer;
+                        temp.ding = buffer;
+                        if (temp.onDone) {temp.onDone();}
                         console.log("Done loading sound!");
                     },
                     function(error) {
