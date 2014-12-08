@@ -20,8 +20,12 @@ function addAudioGraph(expression, duration, div) {
 	button.onclick = function() { // Note this is a function
         if (!playing) {
             playing = 1;
+            document.getElementById(expression).className = "PlayButtonDeactivated";
             audioGraph.play(duration);
-            setTimeout(function(){playing = 0;}, duration*1000);
+            setTimeout(function(){
+                playing = 0;
+                document.getElementById(expression).className = "PlayButton";
+            }, duration*1000);
         }
 	};
 	writeStyle();
@@ -56,6 +60,10 @@ function writeStyle() {
 		 "h3.PlayButton:hover {",
 		     "background-color: white;",
 			 "color: grey;",
+         "}",
+         "h3.PlayButtonDeactivated {",
+             "background-color: white;",
+             "color: grey;",
          "}",
 		 "</style>"].join('\n');
 	document.write(text);
