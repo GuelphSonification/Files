@@ -2,12 +2,16 @@
 var ctx, color = "#000";
 var offset = 250;
 
+//for the screen coordinates (x, y)
 var lowX;
 var highX;
 var topY;
 var bottomY;
 
-var yArr = [];
+var yArr = []; //will keep all the relative y coordinates
+
+var acceptable = 0.001; //Maximum distance between two y values
+var increment = 0.1; //step on the x value for the interpolation
 
 var jString;
 
@@ -20,7 +24,7 @@ function start() {
         }, 1000);
 
     }, false);
-    
+
 }
 
 // function to setup a new canvas for drawing
@@ -40,21 +44,29 @@ function newCanvas() {
 
     // setup to trigger drawing on mouse or touch
     drawTouch();
-   // drawPointer();
-    //drawMouse();
-     drawLine();
+    drawLine(); //Not suitable for use in Internet Explorer
 }
 
+function selectColor(el) {
+    el.style.borderColor = "#fff";
+    el.style.borderStyle = "dashed";
+    color = window.getComputedStyle(el).backgroundColor;
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+}
+
+// prototype to	start drawing on touch using canvas moveTo and lineTo
 var drawTouch = function () {
     var clicked = 0;
     
+    //When the user touches the screen
     var start = function (e) {
         clicked = 1;
         ctx.beginPath();
         x = e.changedTouches[0].pageX - this.offsetLeft;
         y = e.changedTouches[0].pageY - this.offsetTop;
-        
-        lowX = x;
+
+        lowX = x; //Left most x value
         bottomY = 0;
         topY = window.innerHeight - offset;
 
@@ -62,14 +74,15 @@ var drawTouch = function () {
 
         lastY = y;
     };
-    
+
     var lastX = 0;
     var lastY;
     
+    //According to the user's move, it will save the coordinates
     var move = function (e) {
         if (clicked) {
             e.preventDefault();
-            
+
             x = e.changedTouches[0].pageX - this.offsetLeft;
             y = e.changedTouches[0].pageY - this.offsetTop;
 
@@ -77,8 +90,74 @@ var drawTouch = function () {
                 ctx.lineTo(x, y);
                 ctx.stroke();
 
-                highX = x;
+                highX = x; //This will be the right most x value
+                
+                //This part is to keep track of the lowest and highest y values
+                if (y > bottomY)
+                    bottomY = y;
+                if (y < topY)
+                    topY = y;
 
+                lastX = x;
+
+                if (Math.abs(lastY - y) >= 0.001) //Not to push too close values    
+                    yArr.push(y);
+            }
+        }
+    };
+    
+    //Will remove the listener components when the user stops the movements
+    var stop = function (e) {
+        clicked = 0;
+        document.getElementById("canvas").removeEventListener("touchstart", start, false); //Start listener
+        document.getElementById("canvas").removeEventListener("touchmove", move, false); //Move listener
+        document.removeEventListener("touchend", stop, false); //end
+        sonify();
+    };
+
+    //Will add listener components
+    document.getElementById("canvas").addEventListener("touchstart", start, false); //Start listener
+    document.getElementById("canvas").addEventListener("touchmove", move, false); //move listener
+    document.addEventListener("touchend", stop, false); //end
+};
+
+//Function that will draw the line with 
+function drawLine() {
+    var clicked = 0;
+
+    //When the user touches the screen
+    var start = function (e) {
+        clicked = 1;
+        ctx.beginPath();
+        x = e.pageX - this.offsetLeft;
+        y = e.pageY - this.offsetTop;
+
+        lowX = x; //Left most x value
+        bottomY = 0;
+        topY = window.innerHeight - offset;
+
+        ctx.moveTo(x, y);
+
+        lastY = y;
+    };
+
+    var lastX = 0;
+    var lastY;
+    
+    //According to the user's move, it will save the coordinates
+    var move = function (e) {
+
+        if (clicked) {
+            x = e.pageX - this.offsetLeft;
+            y = e.pageY - this.offsetTop;
+
+            if (x >= lastX) {
+                ctx.lineTo(x, y);
+                ctx.stroke();
+
+                highX = x; //This will be the right most x value
+                
+                //This part is to keep track of the lowest and highest y values
                 if (y > bottomY)
                     bottomY = y;
                 if (y < topY)
@@ -91,171 +170,136 @@ var drawTouch = function () {
             }
         }
     };
-    
+
     var stop = function (e) {
         clicked = 0;
-        document.getElementById("canvas").removeEventListener("touchstart", start, false);
-        document.getElementById("canvas").removeEventListener("touchmove", move, false);
-        document.removeEventListener("touchend", stop, false);
+        document.getElementById("canvas").removeEventListener("mousedown", start, false); //Start listener
+        document.getElementById("canvas").removeEventListener("mousemove", move, false); //move listener
+        document.removeEventListener("mouseup", stop, false); //stop  listener
         sonify();
     };
 
-    document.getElementById("canvas").addEventListener("touchstart", start, false);
-    document.getElementById("canvas").addEventListener("touchmove", move, false);
-    document.addEventListener("touchend", stop, false);
-};
-
-function selectColor(el) {
-    el.style.borderColor = "#fff";
-    el.style.borderStyle = "dashed";
-    color = window.getComputedStyle(el).backgroundColor;
-    ctx.beginPath();
-    ctx.strokeStyle = color;
+    document.getElementById("canvas").addEventListener("mousedown", start, false); //start listener
+    document.getElementById("canvas").addEventListener("mousemove", move, false); //move listener
+    document.addEventListener("mouseup", stop, false); //stop listener
 }
 
-function drawLine() {
-    var clicked = 0;
-    
-    var start = function (e) {
-        clicked = 1;
-        ctx.beginPath();
-        x = e.pageX - this.offsetLeft;
-        y = e.pageY - this.offsetTop;
-        
-        lowX = x;
-        bottomY = 0;
-        topY = window.innerHeight - offset;
-        
-        ctx.moveTo(x, y);
-        
-        lastY = y;
-    };
-    
-    var lastX = 0;
-    var lastY;
-    
-    var move = function (e) {
-        
-        if (clicked) {
-            x = e.pageX - this.offsetLeft;
-            y = e.pageY - this.offsetTop;
-            
-            if(x >= lastX) {
-                ctx.lineTo(x, y);
-                ctx.stroke();
-
-                highX = x;
-
-                if(y > bottomY)
-                    bottomY = y;
-                if(y < topY)
-                    topY = y;
-                
-                lastX = x;
-                
-                if(Math.abs(lastY - y) >= 0.016)
-                    yArr.push(y);
-            }
-        }
-    };
-    
-    var stop = function (e) {
-        clicked = 0;
-        document.getElementById("canvas").removeEventListener("mousedown", start, false);
-        document.getElementById("canvas").removeEventListener("mousemove", move, false);
-        document.removeEventListener("mouseup", stop, false);
-        sonify();
-    };
-
-    document.getElementById("canvas").addEventListener("mousedown", start, false);
-    document.getElementById("canvas").addEventListener("mousemove", move, false);
-    document.addEventListener("mouseup", stop, false);
-}
-
+/*Will make the converstion of the coordinates, from absolute to relative to the shape's rectangle*/
 function sonify() {
-    //alert("It's going to sonify");
-    //alert("lowX: " + lowX + " highX: " + highX + " topY " + topY + " bottomY: " + bottomY);
-    
+
     var c = document.getElementById("canvas");
     var ctxRec = c.getContext("2d");
-    
+
     ctxRec.beginPath();
     ctxRec.strokeStyle = "#0066FF";
     ctxRec.lineWidth = 2;
     ctxRec.fillStyle = "#F0F0F0";
-    ctxRec.rect(lowX,topY,highX - lowX,bottomY - topY);
+    ctxRec.rect(lowX, topY, highX - lowX, bottomY - topY);
     ctxRec.stroke();
-    
-    distY = bottomY - topY;
-    distX = highX - lowX;
-    
+
+    distY = bottomY - topY; //Vertical distance
+    distX = highX - lowX; //Horizontal distance
+
+    //Will draw horizontal line inside the rectangle
     ctxRec.beginPath();
-    ctxRec.moveTo(lowX, topY + distY / 2);
+    ctxRec.moveTo(lowX, topY + distY / 2); 
     ctxRec.lineTo(highX, topY + distY / 2);
     ctxRec.stroke();
-    
+
+    //Will draw vertical line inside the rectangle
     ctxRec.beginPath();
     ctxRec.moveTo(lowX + distX / 2, bottomY);
     ctxRec.lineTo(lowX + distX / 2, topY);
     ctxRec.stroke();
-    
+
     generateJSON();
-    
+
 }
 
+//Will generate the JSON object to be sonified
 function generateJSON() {
-    var stringA = "";
-    
-    var norm = Math.abs(bottomY - topY);
-    
-    var xAxis = norm/2 + topY;
-    
+    var norm = Math.abs(bottomY - topY); //Distance between lowest and highest points
+
+    var xAxis = norm / 2 + topY; //Reference of the horizontal axis
+
     var minVal = 0;
     var maxVal = 0;
     
-    stringA = "[";
     
-    for(var i = 0; i < yArr.length; i++) {
-        if(yArr[i] > xAxis) {
-            yArr[i] = 100 * parseFloat(Math.abs(yArr[i] - xAxis) / (norm * -1)).toFixed(4);
+    for (var i = 0; i < yArr.length; i++) {
+        if (yArr[i] > xAxis) {
+            yArr[i] = (Math.abs(yArr[i] - xAxis) / (norm * -1));
         } else {
-            yArr[i] = 100 * parseFloat(Math.abs(yArr[i] - xAxis) / (norm)).toFixed(4);
+            yArr[i] = (Math.abs(yArr[i] - xAxis) / (norm));
         }
         
-        if(yArr[i] < minVal)
+        if (yArr[i] < minVal)
             minVal = yArr[i];
-        if(yArr[i] > maxVal)
+        if (yArr[i] > maxVal)
             maxVal = yArr[i];
     }
     
-    /*for(var i = 0; i < yArr.length; i++) {
-        if(i < (yArr.length - 1))
-            stringA += yArr[i] + ",";
-        else
-            stringA += yArr[i] + "]";
-        
+    //Array with interpolation values
+    var fullValues = [];
+
+    fullValues.push(yArr[0]);
+
+    for (var i = 1; i < yArr.length; i++) {
+        if (Math.abs(yArr[i] - yArr[i - 1]) >= acceptable) { //in case the distance is not acceptable
+            perfomInterpolation(yArr[i - 1], yArr[i], fullValues); //will push interpolated values
+        } else {
+            fullValues.push(yArr[i]); //in case the values are good enough
+        }
     }
     
-    var jsonString = 'callback("f1", {' +
-            '"maxVal":' + maxVal + ',' +
-            '"minVal":' + minVal + ',' +
-            '"values":' + stringA + '});';*/
+    console.log("size yArr = " + yArr.length);
+    console.log("size fullArray = " + fullValues.length);
+
+    var jsonString = {maxVal: maxVal, minVal: minVal, values: fullValues};
+
+    console.log(fullValues);
+
+    audioGraph = new AudioGraph({type: "RAW", value: jsonString});
+
+    audioGraph.play(3);
+
+}
+
+/*Will perform the interpolation*/
+function perfomInterpolation(previous, current, fullValues) {
     
-    var jsonString = { maxVal : maxVal, minVal : minVal, values:yArr};
+    /*Horizontal coordinates*/
+    var x1 = 0;
+    var x2 = 0;
+    var x3 = 1;
     
+    /*Vertical coordinates*/
+    var y1 = previous;
+    var y2;
+    var y3 = current;
     
+    var keep = true;
     
-    audioGraph = new AudioGraph({type:"RAW", value:jsonString});
+    x2 += increment;
     
-    //audioGraph = new AudioGraph("jsonString");
-    audioGraph.play(4);
+    while(keep) {        
+        y2 = ((x2 - x1) * (y3 - y1)) / (x3 - x1) + y1; //Function to get interpolated value
+        
+        fullValues.push(y2);
+        
+        if(Math.abs(y2 - y1) <= acceptable)
+            keep = false;
+        else if (x2 >= x3)
+            keep = false;
+        
+        x2 += increment;
+    }
+    
+    fullValues.push(y3);
     
 }
 
-function getJSON() {
-    return jString;
-}
-
+/*Will verifiy if the broswer is valid*/
 function validBrowser() {
     var is_chrome = navigator.userAgent.indexOf('Chrome') > -1;
     var is_explorer = navigator.userAgent.indexOf('MSIE') > -1;
