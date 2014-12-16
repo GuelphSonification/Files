@@ -195,30 +195,40 @@ AudioGraph.prototype.setValues = function(result){
 		var offset = 300 - this.data.minVal;
 		var ratio = 3100 / (this.data.maxVal - this.data.minVal);
 
-		this.gainValuesHigh[i] = 1;
-		this.gainValuesLow[i] = 1;
+		//this.gainValuesHigh[i] = 1;
+		//this.gainValuesLow[i] = 1;
 
-        if (i > 0 && ((this.data.values[i-1] < 0 && this.data.values[i] >=0)
-            || (this.data.values[i-1] > 0 && this.data.values[i] <= 0))) {
-            this.freqValuesCross[i] = 1;    
-        } else {
-            this.freqValuesCross[i] = 0;
-        }
+        	if (i > 0 && ((this.data.values[i-1] < 0 && this.data.values[i] >=0) || (this.data.values[i-1] > 0 && this.data.values[i] <= 0))) {
+            		this.freqValuesCross[i] = 1;    
+        	} else {
+            		this.freqValuesCross[i] = 0;
+        	}
 
 		if (this.data.values[i] < 0) {
 			if (this.data.minVal < 0) {
 				this.freqValuesLow[i] = offset + ((this.data.values[i] - this.data.minVal) * ratio);
-				this.freqValuesHigh[i] = 0;
+				this.freqValuesHigh[i] = offset + ((this.data.values[i] - this.data.minVal) * ratio);
+				//this.freqValuesHigh[i] = 0;
+				this.gainValuesLow[i] = 1;
+				this.gainValuesHigh[i] = 0;
 			} else {
 				this.freqValuesLow[i] = offset + (this.data.values[i] * ratio);
-				this.freqValuesHigh[i] = 0;
+				this.freqValuesHigh[i] = offset + (this.data.values[i] * ratio);
+				//this.freqValuesHigh[i] = 0;
+				this.gainValuesLow[i] = 1;
+				this.gainValuesHigh[i] = 0;
 			}
 		} else {
 			if (this.data.minVal < 0) {
-				this.freqValuesLow[i] = 0;
+				this.gainValuesLow[i] = 0;
+				this.gainValuesHigh[i] = 1;
+				//this.freqValuesLow[i] = 0;
+				this.freqValuesLow[i] = offset + ((this.data.values[i] - this.data.minVal) * ratio);
 				this.freqValuesHigh[i] = offset + ((this.data.values[i] - this.data.minVal) * ratio);
 			} else {
-				this.freqValuesLow[i] = 0;
+				this.gainValuesLow[i] = 0;
+				this.gainValuesHigh[i] = 1;
+				this.freqValuesLow[i] = offset + (this.data.values[i] * ratio);
 				this.freqValuesHigh[i] = offset + (this.data.values[i] * ratio);
 			}
 		}
