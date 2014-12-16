@@ -81,12 +81,16 @@ AudioGraph.prototype.play = function(duration){
 	//create audio nodes
 	this.node_panner = context.createPanner();
 	var node_oscillator_high = context.createOscillator();
+	var node_gain_high = context.createGain();
 	var node_oscillator_low = context.createOscillator();
+	var node_gain_low = context.createGain();
 	
 	// connect nodes
 	this.node_panner.connect(context.destination);
-	node_oscillator_high.connect(this.node_panner); // Connect sound to output
-	node_oscillator_low.connect(this.node_panner); // Connect sound to output
+	node_oscillator_high.connect(node_gain_high);
+	node_oscillator_low.connect(node_gain_low);
+	node_gain_high.connect(this.node_panner); // Connect sound to output
+	node_gain_low.connect(this.node_panner); // Connect sound to output
 	
 	context.listener.setPosition(0,0,0); // centers the listener in the 3d audio space so that the sound goes evenly around the listener
 	this.node_panner.setPosition(-1,0,0); // defaults the paning to start at the far left x = -1
