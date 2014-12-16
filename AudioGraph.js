@@ -106,9 +106,9 @@ AudioGraph.prototype.play = function(duration){
 	// rolled my own setValueCurveAtTime since setValueCurveAtTime glitches when played multiple times, dont know why...
 	for(var i = 0; i < this.nvalues; i++){
 		node_oscillator_high.frequency.setValueAtTime(this.freqValuesHigh[i],startTime+(step*i));
-		node_gain_high.gain.setValueAtTime(this.gainValuesHigh[i],startTime+(step*i));
+		//node_gain_high.gain.setValueAtTime(this.gainValuesHigh[i],startTime+(step*i));
 		node_oscillator_low.frequency.setValueAtTime(this.freqValuesLow[i],startTime+(step*i));
-		node_gain_low.gain.setValueAtTime(this.gainValuesLow[i],startTime+(step*i));
+		//node_gain_low.gain.setValueAtTime(this.gainValuesLow[i],startTime+(step*i));
 		if (this.ding && this.freqValuesCross[i] == 1)
         {
             var playDing = context.createBufferSource();
