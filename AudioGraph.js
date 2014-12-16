@@ -27,6 +27,9 @@ function AudioGraph(expression){
 	this.nvalues = null;
 	this.freqValuesHigh = null;
 	this.freqValuesLow = null;
+	this.freqValuesCross = null;
+	this.gainValuesHigh = null;
+	this.gainValuesLow = null;
 	
 	if (expression.type == "URL")
 	{
@@ -103,7 +106,9 @@ AudioGraph.prototype.play = function(duration){
 	// rolled my own setValueCurveAtTime since setValueCurveAtTime glitches when played multiple times, dont know why...
 	for(var i = 0; i < this.nvalues; i++){
 		node_oscillator_high.frequency.setValueAtTime(this.freqValuesHigh[i],startTime+(step*i));
+		node_gain_high.frequency.setValueAtTime(this.gainValuesHigh[i],startTime+(step*i));
 		node_oscillator_low.frequency.setValueAtTime(this.freqValuesLow[i],startTime+(step*i));
+		node_gain_low.frequency.setValueAtTime(this.gainValuesLow[i],startTime+(step*i));
 		if (this.ding && this.freqValuesCross[i] == 1)
         {
             var playDing = context.createBufferSource();
@@ -181,11 +186,16 @@ AudioGraph.prototype.setValues = function(result){
 	this.freqValuesHigh = new Float32Array(this.nvalues);   // values to set the frequency to during playback
 	this.freqValuesLow = new Float32Array(this.nvalues);    // values to set the frequency to during playback
 	this.freqValuesCross = new Float32Array(this.nvalues);  // values to handle crossing the x-axis
+	this.gainValuesHigh = new Float32Array(this.nvalues);   // values to set the gain to during playback
+	this.gainValuesLow = new Float32Array(this.nvalues);    // values to set the gain to during playback
 
 	// Sets the frequency and gain values based on the expression provided
 	for(var i = 0;i<this.nvalues; i++){
 		var offset = 300 - this.data.minVal;
 		var ratio = 3100 / (this.data.maxVal - this.data.minVal);
+
+		this.gainValuesHigh[i] = 1;
+		this.gainValuesLow[i] = 1;
 
         if (i > 0 && ((this.data.values[i-1] < 0 && this.data.values[i] >=0)
             || (this.data.values[i-1] > 0 && this.data.values[i] <= 0))) {
