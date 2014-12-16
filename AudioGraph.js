@@ -87,7 +87,7 @@ AudioGraph.prototype.play = function(duration){
 	var node_gain_high = context.createGain();
 	var node_oscillator_low = context.createOscillator();
 	var node_gain_low = context.createGain();
-	node_gain_low.gain.value = 0;
+	node_gain_high.gain.value = 0;
 	
 	// connect nodes
 	this.node_panner.connect(context.destination);
