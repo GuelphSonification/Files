@@ -190,47 +190,31 @@ AudioGraph.prototype.setValues = function(result){
 	this.gainValuesHigh = new Float32Array(this.nvalues);   // values to set the gain to during playback
 	this.gainValuesLow = new Float32Array(this.nvalues);    // values to set the gain to during playback
 
+    var offset = 300 - this.data.minVal;
+    var ratio = 3100 / (this.data.maxVal - this.data.minVal);
+
 	// Sets the frequency and gain values based on the expression provided
 	for(var i = 0;i<this.nvalues; i++){
-		var offset = 300 - this.data.minVal;
-		var ratio = 3100 / (this.data.maxVal - this.data.minVal);
+        if (i > 0 && ((this.data.values[i-1] < 0 && this.data.values[i] >=0) || (this.data.values[i-1] > 0 && this.data.values[i] <= 0))) {
+            this.freqValuesCross[i] = 1;    
+        } else {
+            this.freqValuesCross[i] = 0;
+        }
 
-		//this.gainValuesHigh[i] = 1;
-		//this.gainValuesLow[i] = 1;
-
-        	if (i > 0 && ((this.data.values[i-1] < 0 && this.data.values[i] >=0) || (this.data.values[i-1] > 0 && this.data.values[i] <= 0))) {
-            		this.freqValuesCross[i] = 1;    
-        	} else {
-            		this.freqValuesCross[i] = 0;
-        	}
+        if (this.data.minVal < 0) {
+            this.freqValuesLow[i] = offset + ((this.data.values[i] - this.data.minVal) * ratio);
+            this.freqValuesHigh[i] = offset + ((this.data.values[i] - this.data.minVal) * ratio);
+        } else {
+            this.freqValuesLow[i] = offset + (this.data.values[i] * ratio);
+            this.freqValuesHigh[i] = offset + (this.data.values[i] * ratio);
+        }
 
 		if (this.data.values[i] < 0) {
-			if (this.data.minVal < 0) {
-				this.freqValuesLow[i] = offset + ((this.data.values[i] - this.data.minVal) * ratio);
-				this.freqValuesHigh[i] = offset + ((this.data.values[i] - this.data.minVal) * ratio);
-				//this.freqValuesHigh[i] = 0;
-				this.gainValuesLow[i] = 1;
-				this.gainValuesHigh[i] = 0;
-			} else {
-				this.freqValuesLow[i] = offset + (this.data.values[i] * ratio);
-				this.freqValuesHigh[i] = offset + (this.data.values[i] * ratio);
-				//this.freqValuesHigh[i] = 0;
-				this.gainValuesLow[i] = 1;
-				this.gainValuesHigh[i] = 0;
-			}
+            this.gainValuesLow[i] = 1;
+            this.gainValuesHigh[i] = 0;
 		} else {
-			if (this.data.minVal < 0) {
-				this.gainValuesLow[i] = 0;
-				this.gainValuesHigh[i] = 1;
-				//this.freqValuesLow[i] = 0;
-				this.freqValuesLow[i] = offset + ((this.data.values[i] - this.data.minVal) * ratio);
-				this.freqValuesHigh[i] = offset + ((this.data.values[i] - this.data.minVal) * ratio);
-			} else {
-				this.gainValuesLow[i] = 0;
-				this.gainValuesHigh[i] = 1;
-				this.freqValuesLow[i] = offset + (this.data.values[i] * ratio);
-				this.freqValuesHigh[i] = offset + (this.data.values[i] * ratio);
-			}
+            this.gainValuesLow[i] = 0;
+            this.gainValuesHigh[i] = 1;
 		}
 	}
 }
