@@ -1,8 +1,10 @@
 /**
  * Initializes Web Audio API instance.
  */
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
-var context = new AudioContext();
+if (typeof context == 'undefined'){
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var context = new AudioContext();
+}
 
 
 /** 
