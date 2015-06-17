@@ -26,14 +26,15 @@ function DrawableAudioGraph() {
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight - this.offset);
 
     // setup to trigger drawing on mouse or touch
-    this.addInputListeners();
+    this.addTouchListeners();
+    this.addClickListeners();
 }
 
 
 /**
  * Input listeners, but with touch.
  */
-DrawableAudioGraph.prototype.addInputListeners = function() {
+DrawableAudioGraph.prototype.addTouchListeners = function() {
     var clicked = 0;
     var canvas = document.getElementById("canvas");
     
@@ -89,21 +90,81 @@ DrawableAudioGraph.prototype.addInputListeners = function() {
         clicked = 0;
         canvas.removeEventListener("touchstart", start, false); //Start listener
         canvas.removeEventListener("touchmove", move, false); //Move listener
-        canvas.removeEventListener("mousedown", start, false); //Start listener
-        canvas.removeEventListener("mousemove", move, false); //Move listener
         document.removeEventListener("touchend", stop, false); //end
-        document.removeEventListener("mouseup", stop, false); //end
         sonify();
     };
 
     //Will add listener components
     canvas.addEventListener("touchstart", start, false); //Start listener
     canvas.addEventListener("touchmove", move, false); //move listener
+    document.addEventListener("touchend", stop, false); //end
+};
+
+
+/**
+ * Input listeners, but with touch.
+ */
+DrawableAudioGraph.prototype.addClickListeners = function() {
+    var clicked = 0;
+    var canvas = document.getElementById("canvas");
+
+    //When the user touches the screen
+    var start = function (e) {
+        clicked = 1;
+        this.ctx.beginPath();
+        x = e.pageX - this.offsetLeft;
+        y = e.pageY - this.offsetTop;
+
+        this.lowX = x; //Left most x value
+        this.bottomY = 0;
+        this.topY = window.innerHeight - this.offset;
+
+        this.ctx.moveTo(x, y);
+
+        this.lastY = y;
+    };
+
+    var lastX = 0;
+    var lastY;
+    
+    //According to the user's move, it will save the coordinates
+    var move = function (e) {
+        if (clicked) {
+            x = e.pageX - this.offsetLeft;
+            y = e.pageY - this.offsetTop;
+
+            if (x >= this.lastX) {
+                this.ctx.lineTo(x, y);
+                this.ctx.stroke();
+
+                this.highX = x; //This will be the right most x value
+                
+                //This part is to keep track of the lowest and highest y values
+                if (y > this.bottomY)
+                    this.bottomY = y;
+                if (y < this.topY)
+                    this.topY = y;
+
+                this.lastX = x;
+
+                if (Math.abs(this.lastY - y) >= 0.016)
+                    this.yArr.push(y);
+            }
+        }
+    };
+
+    var stop = function (e) {
+        clicked = 0;
+        canvas.removeEventListener("mousedown", start, false); //Start listener
+        canvas.removeEventListener("mousemove", move, false); //Move listener
+        document.removeEventListener("mouseup", stop, false); //end
+        sonify();
+    };
+
     canvas.addEventListener("mousedown", start, false); //Start listener
     canvas.addEventListener("mousemove", move, false); //move listener
-    document.addEventListener("touchend", stop, false); //end
     document.addEventListener("mouseup", stop, false); //stop listener
-};
+}
 
 
 /**
