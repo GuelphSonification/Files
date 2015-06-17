@@ -1,3 +1,5 @@
+use strict;
+
 function DrawableAudioGraph() {
     //for the screen coordinates (x, y)
     var lowX;
