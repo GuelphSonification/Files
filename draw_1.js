@@ -4,6 +4,7 @@ function DrawableAudioGraph() {
     var highX;
     var topY;
     var bottomY;
+    var offset = 250;
 
     var yArr = []; //will keep all the relative y coordinates
 
@@ -13,8 +14,8 @@ function DrawableAudioGraph() {
     var jString;
     
     //define and resize canvas
-    document.getElementById("content").style.height = window.innerHeight - offset;
-    var canvas = '<canvas id="canvas" width="' + window.innerWidth + '" height="' + (window.innerHeight - offset) + '"></canvas>';
+    document.getElementById("content").style.height = window.innerHeight - this.offset;
+    var canvas = '<canvas id="canvas" width="' + window.innerWidth + '" height="' + (window.innerHeight - this.offset) + '"></canvas>';
     document.getElementById("content").innerHTML = canvas;
 
     // setup canvas
@@ -22,7 +23,7 @@ function DrawableAudioGraph() {
     ctx.strokeStyle = "#000";
     ctx.lineWidth = 5;
     ctx.fillStyle = "#F0F0F0";
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight - offset);
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight - this.offset);
 
     // setup to trigger drawing on mouse or touch
     this.addInputListeners();
@@ -45,7 +46,7 @@ DrawableAudioGraph.prototype.addInputListeners = function() {
 
         lowX = x; //Left most x value
         bottomY = 0;
-        topY = window.innerHeight - offset;
+        topY = window.innerHeight - this.offset;
 
         ctx.moveTo(x, y);
 

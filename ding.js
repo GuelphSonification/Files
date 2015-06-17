@@ -22,7 +22,9 @@ function loadDing(temp) {
 }
 
 
-/* will return a  Uint8Array type */
+/**
+ * will return a  Uint8Array type
+ */
 function decodeArrayBuffer(input) {
     var bytes = (input.length/4) * 3;
     var ab = new ArrayBuffer(bytes);
@@ -33,7 +35,7 @@ function decodeArrayBuffer(input) {
 
 
 function decode(input, arrayBuffer) {
-	var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+	  var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
     //get last chars to see if are valid
     var lkey1 = _keyStr.indexOf(input.charAt(input.length-1));		 

@@ -26,7 +26,7 @@ function bakeCookie() {
  * (Currently unused, keeping for future need/reference.)
  */
 function deleteCookie() {
-  document.cookie = ["SonificationMetricData=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; domain=.", window.location.host.toString()].join('');
+    document.cookie = ["SonificationMetricData=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; domain=.", window.location.host.toString()].join('');
 }
 
 
@@ -39,13 +39,13 @@ function deleteCookie() {
  * @param	id	ID of the element in which to submit the cookie
  */
 function submitCookie(id) {
-  var element = document.getElementById(id);
-  //element.value = JSON.stringify(data);
-  //element.disabled = true;
-  //element.style.display = "none";
-  element.disabled = false;
-  element.style.display = "block";
-  parseDate(id);
+    var element = document.getElementById(id);
+    //element.value = JSON.stringify(data);
+    //element.disabled = true;
+    //element.style.display = "none";
+    element.disabled = false;
+    element.style.display = "block";
+    parseDate(id);
 }
 
 
@@ -56,15 +56,12 @@ function submitCookie(id) {
  * (Called each time a graph is loaded.)
  */
 function readCookie() {
- var result = document.cookie.match(new RegExp("SonificationMetricData=([^;]+)"));
- if (result && (result = JSON.parse(result[1])))
- {
-  data = result;
- }
- else
- {
-  data = {"sessions":[]};
- }
+    var result = document.cookie.match(new RegExp("SonificationMetricData=([^;]+)"));
+    if (result && (result = JSON.parse(result[1]))) {
+        data = result;
+    } else {
+        data = {"sessions":[]};
+    }
 }
 
 /**
