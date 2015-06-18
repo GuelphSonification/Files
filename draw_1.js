@@ -122,18 +122,19 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
         that.ctx.beginPath();
         var x = e.pageX - this.offsetLeft;
         var y = e.pageY - this.offsetTop;
-
+        
         that.lowX = x; //Left most x value
         that.bottomY = 0;
         that.topY = window.innerHeight - that.offset;
-
+        
         that.ctx.moveTo(x, y);
-
+        
         that.lastY = y;
     };
     
     //According to the user's move, it will save the coordinates
     var move = function(e) {
+        console.log("asdf");
         if (clicked) {
             var x = e.pageX - this.offsetLeft;
             var y = e.pageY - this.offsetTop;
