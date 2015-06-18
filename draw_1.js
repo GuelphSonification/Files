@@ -40,6 +40,8 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
     var clicked = 0;
     var canvas = document.getElementById("canvas");
 
+    var lastX = 0;
+    var lastY;
     
     //When the user touches the screen
     var start = function(e) {
@@ -56,9 +58,6 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
 
         lastY = y;
     };
-
-    var lastX = 0;
-    var lastY;
     
     //According to the user's move, it will save the coordinates
     var move = function(e) {
@@ -111,6 +110,8 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     var clicked = 0;
     var canvas = document.getElementById("canvas");
 
+    var lastX = 0;
+    var lastY;
 
     //When the user touches the screen
     var start = function(e) {
@@ -127,9 +128,6 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
 
         this.lastY = y;
     };
-
-    var lastX = 0;
-    var lastY;
     
     //According to the user's move, it will save the coordinates
     var move = function(e) {
