@@ -135,7 +135,6 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     //According to the user's move, it will save the coordinates
     var move = function(e) {
         if (clicked) {
-            console.log("asdf");
             var x = e.pageX - this.offsetLeft;
             var y = e.pageY - this.offsetTop;
 
@@ -153,8 +152,10 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
 
                 that.lastX = x;
 
-                if (Math.abs(that.lastY - y) >= 0.016)
+                if (Math.abs(that.lastY - y) >= 0.016) {
                     that.yArr.push(y);
+                    console.log("asdf");
+                }
             }
         }
     };
