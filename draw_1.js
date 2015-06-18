@@ -18,14 +18,14 @@ function DrawableAudioGraph() {
     //define and resize canvas
     document.getElementById("content").style.height = window.innerHeight - this.offset;
     this.canvas = '<canvas id="canvas" width="' + window.innerWidth + '" height="' + (window.innerHeight - this.offset) + '"></canvas>';
-    document.getElementById("content").innerHTML = canvas;
+    document.getElementById("content").innerHTML = this.canvas;
 
     // setup canvas
     this.ctx = document.getElementById("canvas").getContext("2d");
-    ctx.strokeStyle = "#000";
-    ctx.lineWidth = 5;
-    ctx.fillStyle = "#F0F0F0";
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight - this.offset);
+    this.ctx.strokeStyle = "#000";
+    this.ctx.lineWidth = 5;
+    this.ctx.fillStyle = "#F0F0F0";
+    this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight - this.offset);
 
     // setup to trigger drawing on mouse or touch
     this.addTouchListeners();
