@@ -4,6 +4,9 @@ function DrawableAudioGraph() {
     this.highX;
     this.topY;
     this.bottomY;
+    this.lastY;
+    this.lastX = 0;
+
     this.offset = 250;
 
     this.clicked = 0;
@@ -39,9 +42,6 @@ function DrawableAudioGraph() {
  */
 DrawableAudioGraph.prototype.addTouchListeners = function() {
     var canvas = document.getElementById("canvas");
-  
-    var lastX = 0;
-    var lastY;
     
     var that = this;
          
@@ -111,9 +111,6 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
  */
 DrawableAudioGraph.prototype.addClickListeners = function() {
     var canvas = document.getElementById("canvas");
-  
-    var lastX = 0;
-    var lastY;
     
     var that = this;
 
