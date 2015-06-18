@@ -91,7 +91,7 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
     
     //Will remove the listener components when the user stops the movements
     var stop = function(e) {
-        this.clicked = 0;
+        that.clicked = 0;
         canvas.removeEventListener("touchstart", start, false); //Start listener
         canvas.removeEventListener("touchmove", move, false); //Move listener
         document.removeEventListener("touchend", stop, false); //end
@@ -119,7 +119,7 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
 
     //When the user touches the screen
     var start = function(e) {
-        this.clicked = 1;
+        that.clicked = 1;
         console.log("Clicked - " + this.clicked);
         that.ctx.beginPath();
         var x = e.pageX - this.offsetLeft;
