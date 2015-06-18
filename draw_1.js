@@ -47,7 +47,7 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
          
     //When the user touches the screen
     var start = function(e) {
-        this.clicked = 1;
+        that.clicked = 1;
         that.ctx.beginPath();
         var x = e.changedTouches[0].pageX - this.offsetLeft;
         var y = e.changedTouches[0].pageY - this.offsetTop;
@@ -63,7 +63,7 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
     
     //According to the user's move, it will save the coordinates
     var move = function(e) {
-        if (this.clicked) {
+        if (that.clicked) {
             e.preventDefault();
 
             var x = e.changedTouches[0].pageX - this.offsetLeft;
@@ -120,7 +120,7 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     //When the user touches the screen
     var start = function(e) {
         that.clicked = 1;
-        console.log("Clicked - " + this.clicked);
+        console.log("Clicked - " + that.clicked);
         that.ctx.beginPath();
         var x = e.pageX - this.offsetLeft;
         var y = e.pageY - this.offsetTop;
@@ -136,7 +136,7 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     
     //According to the user's move, it will save the coordinates
     var move = function(e) {
-        if (this.clicked) {
+        if (that.clicked) {
             console.log("Moved");
             var x = e.pageX - this.offsetLeft;
             var y = e.pageY - this.offsetTop;
@@ -164,7 +164,7 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     };
 
     var stop = function(e) {
-        this.clicked = 0;
+        that.clicked = 0;
         console.log("Stopped - " + this.clicked);
         canvas.removeEventListener("mousedown", start, false); //Start listener
         canvas.removeEventListener("mousemove", move, false); //Move listener
