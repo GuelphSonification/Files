@@ -39,17 +39,19 @@ function DrawableAudioGraph() {
 DrawableAudioGraph.prototype.addTouchListeners = function() {
     var clicked = 0;
     var canvas = document.getElementById("canvas");
+
+    var that = this;
     
     //When the user touches the screen
-    let start = (e) => {
+    var start = function(e) {
         clicked = 1;
-        this.ctx.beginPath();
-        x = e.changedTouches[0].pageX - this.offsetLeft;
-        y = e.changedTouches[0].pageY - this.offsetTop;
+        that.ctx.beginPath();
+        x = e.changedTouches[0].pageX - that.offsetLeft;
+        y = e.changedTouches[0].pageY - that.offsetTop;
 
         lowX = x; //Left most x value
         bottomY = 0;
-        topY = window.innerHeight - this.offset;
+        topY = window.innerHeight - that.offset;
 
         ctx.moveTo(x, y);
 
@@ -60,24 +62,24 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
     var lastY;
     
     //According to the user's move, it will save the coordinates
-    let move = (e) => {
+    var move = function(e) {
         if (clicked) {
             e.preventDefault();
 
-            x = e.changedTouches[0].pageX - this.offsetLeft;
-            y = e.changedTouches[0].pageY - this.offsetTop;
+            x = e.changedTouches[0].pageX - that.offsetLeft;
+            y = e.changedTouches[0].pageY - that.offsetTop;
 
             if (x >= lastX) {
-                this.ctx.lineTo(x, y);
-                this.ctx.stroke();
+                that.ctx.lineTo(x, y);
+                that.ctx.stroke();
 
-                this.highX = x; //This will be the right most x value
+                that.highX = x; //This will be the right most x value
                 
                 //This part is to keep track of the lowest and highest y values
                 if (y > bottomY)
-                    this.bottomY = y;
+                    that.bottomY = y;
                 if (y < topY)
-                    this.topY = y;
+                    that.topY = y;
 
                 lastX = x;
 
@@ -88,7 +90,7 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
     };
     
     //Will remove the listener components when the user stops the movements
-    let stop = (e) => {
+    var stop = function(e) {
         clicked = 0;
         canvas.removeEventListener("touchstart", start, false); //Start listener
         canvas.removeEventListener("touchmove", move, false); //Move listener
@@ -110,52 +112,54 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     var clicked = 0;
     var canvas = document.getElementById("canvas");
 
+    var that = this;
+
     //When the user touches the screen
-    let start = (e) => {
+    var start = function(e) {
         clicked = 1;
-        this.ctx.beginPath();
-        x = e.pageX - this.offsetLeft;
-        y = e.pageY - this.offsetTop;
+        that.ctx.beginPath();
+        x = e.pageX - that.offsetLeft;
+        y = e.pageY - that.offsetTop;
 
-        this.lowX = x; //Left most x value
-        this.bottomY = 0;
-        this.topY = window.innerHeight - this.offset;
+        that.lowX = x; //Left most x value
+        that.bottomY = 0;
+        that.topY = window.innerHeight - that.offset;
 
-        this.ctx.moveTo(x, y);
+        that.ctx.moveTo(x, y);
 
-        this.lastY = y;
+        that.lastY = y;
     };
 
     var lastX = 0;
     var lastY;
     
     //According to the user's move, it will save the coordinates
-    let move = (e) => {
+    var move = function(e) {
         if (clicked) {
-            x = e.pageX - this.offsetLeft;
-            y = e.pageY - this.offsetTop;
+            x = e.pageX - that.offsetLeft;
+            y = e.pageY - that.offsetTop;
 
-            if (x >= this.lastX) {
-                this.ctx.lineTo(x, y);
-                this.ctx.stroke();
+            if (x >= that.lastX) {
+                that.ctx.lineTo(x, y);
+                that.ctx.stroke();
 
-                this.highX = x; //This will be the right most x value
+                that.highX = x; //This will be the right most x value
                 
                 //This part is to keep track of the lowest and highest y values
-                if (y > this.bottomY)
-                    this.bottomY = y;
-                if (y < this.topY)
-                    this.topY = y;
+                if (y > that.bottomY)
+                    that.bottomY = y;
+                if (y < that.topY)
+                    that.topY = y;
 
-                this.lastX = x;
+                that.lastX = x;
 
-                if (Math.abs(this.lastY - y) >= 0.016)
-                    this.yArr.push(y);
+                if (Math.abs(that.lastY - y) >= 0.016)
+                    that.yArr.push(y);
             }
         }
     };
 
-    let stop = (e) => {
+    var stop = function(e) {
         clicked = 0;
         canvas.removeEventListener("mousedown", start, false); //Start listener
         canvas.removeEventListener("mousemove", move, false); //Move listener
