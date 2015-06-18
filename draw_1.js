@@ -219,7 +219,7 @@ DrawableAudioGraph.prototype.generateJSON = function() {
     var maxVal = 0;
     
     
-    for (var i = 0; i < yArr.length; i++) {
+    for (var i = 0; i < this.yArr.length; i++) {
         if (this.yArr[i] > xAxis) {
             this.yArr[i] = (Math.abs(this.yArr[i] - xAxis) / (norm * -1));
         } else {
