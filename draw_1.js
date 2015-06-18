@@ -39,20 +39,22 @@ function DrawableAudioGraph() {
 DrawableAudioGraph.prototype.addTouchListeners = function() {
     var clicked = 0;
     var canvas = document.getElementById("canvas");
-
+  
     var lastX = 0;
     var lastY;
     
+    var that = this;
+        
     //When the user touches the screen
     var start = function(e) {
         clicked = 1;
-        this.ctx.beginPath();
-        var x = e.changedTouches[0].pageX - this.offsetLeft;
-        var y = e.changedTouches[0].pageY - this.offsetTop;
+        that.ctx.beginPath();
+        x = e.changedTouches[0].pageX - this.offsetLeft;
+        y = e.changedTouches[0].pageY - this.offsetTop;
 
         lowX = x; //Left most x value
         bottomY = 0;
-        topY = window.innerHeight - this.offset;
+        topY = window.innerHeight - that.offset;
 
         ctx.moveTo(x, y);
 
@@ -64,20 +66,20 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
         if (clicked) {
             e.preventDefault();
 
-            var x = e.changedTouches[0].pageX - this.offsetLeft;
-            var y = e.changedTouches[0].pageY - this.offsetTop;
+            x = e.changedTouches[0].pageX - this.offsetLeft;
+            y = e.changedTouches[0].pageY - this.offsetTop;
 
             if (x >= lastX) {
-                this.ctx.lineTo(x, y);
-                this.ctx.stroke();
+                that.ctx.lineTo(x, y);
+                that.ctx.stroke();
 
-                this.highX = x; //This will be the right most x value
+                that.highX = x; //This will be the right most x value
                 
                 //This part is to keep track of the lowest and highest y values
                 if (y > bottomY)
-                    this.bottomY = y;
+                    that.bottomY = y;
                 if (y < topY)
-                    this.topY = y;
+                    that.topY = y;
 
                 lastX = x;
 
@@ -109,48 +111,50 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
 DrawableAudioGraph.prototype.addClickListeners = function() {
     var clicked = 0;
     var canvas = document.getElementById("canvas");
-
+  
     var lastX = 0;
     var lastY;
+    
+    var that = this;
 
     //When the user touches the screen
     var start = function(e) {
         clicked = 1;
-        this.ctx.beginPath();
-        var x = e.pageX - this.offsetLeft;
-        var y = e.pageY - this.offsetTop;
+        that.ctx.beginPath();
+        x = e.pageX - this.offsetLeft;
+        y = e.pageY - this.offsetTop;
 
-        this.lowX = x; //Left most x value
-        this.bottomY = 0;
-        this.topY = window.innerHeight - this.offset;
+        that.lowX = x; //Left most x value
+        that.bottomY = 0;
+        that.topY = window.innerHeight - that.offset;
 
-        this.ctx.moveTo(x, y);
+        that.ctx.moveTo(x, y);
 
-        this.lastY = y;
+        that.lastY = y;
     };
     
     //According to the user's move, it will save the coordinates
     var move = function(e) {
         if (clicked) {
-            var x = e.pageX - this.offsetLeft;
-            var y = e.pageY - this.offsetTop;
+            x = e.pageX - this.offsetLeft;
+            y = e.pageY - this.offsetTop;
 
-            if (x >= this.lastX) {
-                this.ctx.lineTo(x, y);
-                this.ctx.stroke();
+            if (x >= that.lastX) {
+                that.ctx.lineTo(x, y);
+                that.ctx.stroke();
 
-                this.highX = x; //This will be the right most x value
+                that.highX = x; //This will be the right most x value
                 
                 //This part is to keep track of the lowest and highest y values
-                if (y > this.bottomY)
-                    this.bottomY = y;
-                if (y < this.topY)
-                    this.topY = y;
+                if (y > that.bottomY)
+                    that.bottomY = y;
+                if (y < that.topY)
+                    that.topY = y;
 
-                this.lastX = x;
+                that.lastX = x;
 
-                if (Math.abs(this.lastY - y) >= 0.016)
-                    this.yArr.push(y);
+                if (Math.abs(that.lastY - y) >= 0.016)
+                    that.yArr.push(y);
             }
         }
     };
