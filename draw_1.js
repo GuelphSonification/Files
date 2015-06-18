@@ -2,26 +2,26 @@
 
 function DrawableAudioGraph() {
     //for the screen coordinates (x, y)
-    var lowX;
-    var highX;
-    var topY;
-    var bottomY;
-    var offset = 250;
+    this.lowX;
+    this.highX;
+    this.topY;
+    this.bottomY;
+    this.offset = 250;
 
-    var yArr = []; //will keep all the relative y coordinates
+    this.yArr = []; //will keep all the relative y coordinates
 
-    var acceptable = 0.001; //Maximum distance between two y values
-    var increment = 0.1; //step on the x value for the interpolation
+    this.acceptable = 0.001; //Maximum distance between two y values
+    this.increment = 0.1; //step on the x value for the interpolation
 
-    var jString;
+    this.jString;
     
     //define and resize canvas
     document.getElementById("content").style.height = window.innerHeight - this.offset;
-    var canvas = '<canvas id="canvas" width="' + window.innerWidth + '" height="' + (window.innerHeight - this.offset) + '"></canvas>';
+    this.canvas = '<canvas id="canvas" width="' + window.innerWidth + '" height="' + (window.innerHeight - this.offset) + '"></canvas>';
     document.getElementById("content").innerHTML = canvas;
 
     // setup canvas
-    var ctx = document.getElementById("canvas").getContext("2d");
+    this.ctx = document.getElementById("canvas").getContext("2d");
     ctx.strokeStyle = "#000";
     ctx.lineWidth = 5;
     ctx.fillStyle = "#F0F0F0";
