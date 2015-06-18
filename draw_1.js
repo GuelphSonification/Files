@@ -25,6 +25,8 @@ function DrawableAudioGraph() {
     this.ctx.fillStyle = "#F0F0F0";
     this.ctx.fillRect(0, 0, window.innerWidth, window.innerHeight - this.offset);
 
+    this.audioGraph;
+
     // setup to trigger drawing on mouse or touch
     this.addTouchListeners();
     this.addClickListeners();
@@ -94,7 +96,7 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
         canvas.removeEventListener("touchmove", move, false); //Move listener
         document.removeEventListener("touchend", stop, false); //end
         that.sonify();
-        //that.generateJSON();
+        that.generateJSON();
     };
 
     //Will add listener components
@@ -166,7 +168,7 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
         canvas.removeEventListener("mousemove", move, false); //Move listener
         document.removeEventListener("mouseup", stop, false); //end
         that.sonify();
-        //that.generateJSON();
+        that.generateJSON();
     };
 
     canvas.addEventListener("mousedown", start, false); //Start listener
@@ -204,7 +206,6 @@ DrawableAudioGraph.prototype.sonify = function() {
     ctxRec.moveTo(this.lowX + distX / 2, this.bottomY);
     ctxRec.lineTo(this.lowX + distX / 2, this.topY);
     ctxRec.stroke();
-    this.generateJSON();
 }
 
 
@@ -253,9 +254,9 @@ DrawableAudioGraph.prototype.generateJSON = function() {
 
     console.log(fullValues);
 
-    audioGraph = new AudioGraph({type: "RAW", value: jsonString});
+    this.audioGraph = new AudioGraph({type: "RAW", value: jsonString});
 
-    audioGraph.play(3);
+    this.audioGraph.play(3);
 }
 
 
