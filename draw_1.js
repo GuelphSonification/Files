@@ -110,7 +110,7 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
  * Input listeners, but with touch.
  */
 DrawableAudioGraph.prototype.addClickListeners = function() {
-    //var canvas = document.getElementById("canvas");
+    var canvas = document.getElementById("canvas");
   
     var lastX = 0;
     var lastY;
@@ -163,15 +163,15 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
 
     var stop = function(e) {
         this.clicked = 0;
-        this.canvas.removeEventListener("mousedown", start, false); //Start listener
-        this.canvas.removeEventListener("mousemove", move, false); //Move listener
+        canvas.removeEventListener("mousedown", start, false); //Start listener
+        canvas.removeEventListener("mousemove", move, false); //Move listener
         document.removeEventListener("mouseup", stop, false); //end
         that.sonify();
         that.generateJSON();
     };
 
-    this.canvas.addEventListener("mousedown", start, false); //Start listener
-    this.canvas.addEventListener("mousemove", move, false); //move listener
+    canvas.addEventListener("mousedown", start, false); //Start listener
+    canvas.addEventListener("mousemove", move, false); //move listener
     document.addEventListener("mouseup", stop, false); //stop listener
 }
 
