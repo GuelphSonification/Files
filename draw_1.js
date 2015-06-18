@@ -95,7 +95,8 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
         canvas.removeEventListener("touchstart", start, false); //Start listener
         canvas.removeEventListener("touchmove", move, false); //Move listener
         document.removeEventListener("touchend", stop, false); //end
-        sonify();
+        this.sonify();
+        this.generateJSON();
     };
 
     //Will add listener components
@@ -164,7 +165,8 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
         canvas.removeEventListener("mousedown", start, false); //Start listener
         canvas.removeEventListener("mousemove", move, false); //Move listener
         document.removeEventListener("mouseup", stop, false); //end
-        sonify();
+        this.sonify();
+        this.generateJSON();
     };
 
     canvas.addEventListener("mousedown", start, false); //Start listener
@@ -202,8 +204,6 @@ DrawableAudioGraph.prototype.sonify = function() {
     ctxRec.moveTo(this.lowX + distX / 2, this.bottomY);
     ctxRec.lineTo(this.lowX + distX / 2, this.topY);
     ctxRec.stroke();
-
-    generateJSON();
 }
 
 
