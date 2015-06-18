@@ -134,8 +134,8 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     
     //According to the user's move, it will save the coordinates
     var move = function(e) {
-        console.log("asdf");
         if (clicked) {
+            console.log("asdf");
             var x = e.pageX - this.offsetLeft;
             var y = e.pageY - this.offsetTop;
 
