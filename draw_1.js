@@ -120,6 +120,7 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     //When the user touches the screen
     var start = function(e) {
         this.clicked = 1;
+        alert("Clicked - " + this.clicked);
         that.ctx.beginPath();
         var x = e.pageX - this.offsetLeft;
         var y = e.pageY - this.offsetTop;
