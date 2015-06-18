@@ -95,8 +95,8 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
         canvas.removeEventListener("touchstart", start, false); //Start listener
         canvas.removeEventListener("touchmove", move, false); //Move listener
         document.removeEventListener("touchend", stop, false); //end
-        this.sonify();
-        this.generateJSON();
+        that.sonify();
+        that.generateJSON();
     };
 
     //Will add listener components
@@ -165,8 +165,8 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
         canvas.removeEventListener("mousedown", start, false); //Start listener
         canvas.removeEventListener("mousemove", move, false); //Move listener
         document.removeEventListener("mouseup", stop, false); //end
-        this.sonify();
-        this.generateJSON();
+        that.sonify();
+        that.generateJSON();
     };
 
     canvas.addEventListener("mousedown", start, false); //Start listener
