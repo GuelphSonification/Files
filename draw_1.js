@@ -190,8 +190,8 @@ DrawableAudioGraph.prototype.sonify = function() {
     ctxRec.rect(this.lowX, this.topY, this.highX - this.lowX, this.bottomY - this.topY);
     ctxRec.stroke();
 
-    distY = this.bottomY - this.topY; //Vertical distance
-    distX = this.highX - this.lowX; //Horizontal distance
+    var distY = this.bottomY - this.topY; //Vertical distance
+    var distX = this.highX - this.lowX; //Horizontal distance
 
     //Will draw horizontal line inside the rectangle
     ctxRec.beginPath();
