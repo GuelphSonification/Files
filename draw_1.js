@@ -1,5 +1,3 @@
-"use strict";
-
 function DrawableAudioGraph() {
     //for the screen coordinates (x, y)
     this.lowX;
