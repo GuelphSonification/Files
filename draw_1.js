@@ -46,8 +46,8 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
     var start = function(e) {
         clicked = 1;
         that.ctx.beginPath();
-        x = e.changedTouches[0].pageX - that.offsetLeft;
-        y = e.changedTouches[0].pageY - that.offsetTop;
+        x = e.changedTouches[0].pageX - this.offsetLeft;
+        y = e.changedTouches[0].pageY - this.offsetTop;
 
         lowX = x; //Left most x value
         bottomY = 0;
@@ -66,8 +66,8 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
         if (clicked) {
             e.preventDefault();
 
-            x = e.changedTouches[0].pageX - that.offsetLeft;
-            y = e.changedTouches[0].pageY - that.offsetTop;
+            x = e.changedTouches[0].pageX - this.offsetLeft;
+            y = e.changedTouches[0].pageY - this.offsetTop;
 
             if (x >= lastX) {
                 that.ctx.lineTo(x, y);
@@ -118,8 +118,8 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     var start = function(e) {
         clicked = 1;
         that.ctx.beginPath();
-        x = e.pageX - that.offsetLeft;
-        y = e.pageY - that.offsetTop;
+        x = e.pageX - this.offsetLeft;
+        y = e.pageY - this.offsetTop;
 
         that.lowX = x; //Left most x value
         that.bottomY = 0;
@@ -136,8 +136,8 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     //According to the user's move, it will save the coordinates
     var move = function(e) {
         if (clicked) {
-            x = e.pageX - that.offsetLeft;
-            y = e.pageY - that.offsetTop;
+            x = e.pageX - this.offsetLeft;
+            y = e.pageY - this.offsetTop;
 
             if (x >= that.lastX) {
                 that.ctx.lineTo(x, y);
