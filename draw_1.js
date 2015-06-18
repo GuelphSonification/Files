@@ -120,7 +120,7 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     //When the user touches the screen
     var start = function(e) {
         this.clicked = 1;
-        alert("Clicked - " + this.clicked);
+        console.log("Clicked - " + this.clicked);
         that.ctx.beginPath();
         var x = e.pageX - this.offsetLeft;
         var y = e.pageY - this.offsetTop;
@@ -137,6 +137,7 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     //According to the user's move, it will save the coordinates
     var move = function(e) {
         if (this.clicked) {
+            console.log("Moved");
             var x = e.pageX - this.offsetLeft;
             var y = e.pageY - this.offsetTop;
 
@@ -164,6 +165,7 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
 
     var stop = function(e) {
         this.clicked = 0;
+        console.log("Stopped - " + this.clicked);
         canvas.removeEventListener("mousedown", start, false); //Start listener
         canvas.removeEventListener("mousemove", move, false); //Move listener
         document.removeEventListener("mouseup", stop, false); //end
