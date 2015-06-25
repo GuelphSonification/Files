@@ -287,8 +287,9 @@ function parseData(element) {
         stringElement += "; Total time: " + data.sessions[i].totalTime / 1000; //Converting to seconds
         stringElement += " - ";
     }
-    
+    element.focus();
     element.value = stringElement;
+    element.blur();
 }
 
 
