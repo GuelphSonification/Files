@@ -248,12 +248,9 @@ function deleteCookie() {
  * @param	id	ID of the element in which to submit the cookie
  */
 function submitCookie(element) {
-    //element.value = JSON.stringify(data);
-    //element.disabled = true;
-    //element.style.display = "none";
     element.style.display = "block";
     parseData(element);
-    element.disabled = true;
+    element.focus();
 }
 
 
@@ -287,9 +284,7 @@ function parseData(element) {
         stringElement += "; Total time: " + data.sessions[i].totalTime / 1000; //Converting to seconds
         stringElement += " - ";
     }
-    element.focus();
     element.value = stringElement;
-    element.blur();
 }
 
 
