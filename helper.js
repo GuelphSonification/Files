@@ -291,7 +291,7 @@ function parseData(id) {
         stringElement += " - ";
     }
     
-    $(id).val(stringElement).trigger('change');
+    $('#' + id).val(stringElement).trigger('change');
 }
 
 
