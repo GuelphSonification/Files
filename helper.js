@@ -253,7 +253,7 @@ function submitCookie(id) {
     //element.disabled = true;
     //element.style.display = "none";
     element.style.display = "block";
-    parseDate(id);
+    parseData(id);
     element.focus();
     document.documentElement.focus();
 }
