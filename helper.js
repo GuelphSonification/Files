@@ -282,7 +282,7 @@ function readCookie() {
  */
 function parseData(id) {
     var element = document.getElementById(id);
-    var stringElement;
+    var stringElement = '';
     
     for(var i = 0; i < data.sessions.length; i++) {
         stringElement += "Graph: " + data.sessions[i].graph;
@@ -292,6 +292,8 @@ function parseData(id) {
     }
     
     $('#' + id).val(stringElement).trigger('change');
+    console.log("#"+id);
+    console.log(stringElement);
 }
 
 
