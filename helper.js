@@ -255,7 +255,7 @@ function submitCookie(id) {
     element.disabled = false;
     element.style.display = "block";
     parseDate(id);
-    element.onchange(element);
+    element.change(element);
 }
 
 
