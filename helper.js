@@ -254,7 +254,6 @@ function submitCookie(id) {
     //element.style.display = "none";
     element.disabled = false;
     element.style.display = "block";
-    $(id).trigger('change');
     parseDate(id);
 }
 
@@ -293,8 +292,9 @@ function parseDate(id) {
         stringElement += " - ";
         
         element.value += stringElement;
-        element.disabled = true;
     }
+    element.disabled = true;
+    $(id).trigger('change');
 }
 
 
