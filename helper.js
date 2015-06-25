@@ -255,6 +255,7 @@ function submitCookie(id) {
     element.disabled = false;
     element.style.display = "block";
     parseDate(id);
+    element.onchange(element);
 }
 
 
@@ -292,9 +293,8 @@ function parseDate(id) {
         stringElement += " - ";
         
         element.value += stringElement;
+        element.disabled = true;
     }
-    element.disabled = true;
-    $(id).trigger('change');
 }
 
 
