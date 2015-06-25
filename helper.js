@@ -252,7 +252,6 @@ function submitCookie(id) {
     //element.value = JSON.stringify(data);
     //element.disabled = true;
     //element.style.display = "none";
-    element.disabled = false;
     element.style.display = "block";
     parseDate(id);
     element.focus();
@@ -281,21 +280,18 @@ function readCookie() {
  *  @param    id	ID of the element in which to submit the cookie
  *
  */
-function parseDate(id) {
+function parseData(id) {
     var element = document.getElementById(id);
     var stringElement;
     
-    element.value = "";
-    
     for(var i = 0; i < data.sessions.length; i++) {
-        stringElement = "Graph: " + data.sessions[i].graph;
+        stringElement += "Graph: " + data.sessions[i].graph;
         stringElement += "; Replays: " + data.sessions[i].replays;
         stringElement += "; Total time: " + data.sessions[i].totalTime / 1000; //Converting to seconds
         stringElement += " - ";
-        
-        element.value += stringElement;
-        element.disabled = true;
     }
+    
+    $(id).val(stringElement).trigger('change');
 }
 
 
