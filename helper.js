@@ -255,7 +255,7 @@ function submitCookie(id) {
     element.style.display = "block";
     parseData(id);
     element.disabled = true;
-    $('#'+id).val().trigger('change');
+    $('textarea').trigger('change');
 }
 
 
