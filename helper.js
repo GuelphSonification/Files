@@ -254,6 +254,7 @@ function submitCookie(id) {
     //element.style.display = "none";
     element.disabled = false;
     element.style.display = "block";
+    $(id).trigger('change');
     parseDate(id);
 }
 
