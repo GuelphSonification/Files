@@ -254,8 +254,8 @@ function submitCookie(id) {
     //element.style.display = "none";
     element.style.display = "block";
     parseData(id);
-    element.focus();
-    document.documentElement.focus();
+    element.disabled = true;
+    $('#'+id).val().trigger('change');
 }
 
 
@@ -291,9 +291,7 @@ function parseData(id) {
         stringElement += " - ";
     }
     
-    $('#' + id).val(stringElement).trigger('change');
-    console.log("#"+id);
-    console.log(stringElement);
+    element.value = stringElement;
 }
 
 
