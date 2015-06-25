@@ -247,15 +247,13 @@ function deleteCookie() {
  *
  * @param	id	ID of the element in which to submit the cookie
  */
-function submitCookie(id) {
-    var element = document.getElementById(id);
+function submitCookie(element) {
     //element.value = JSON.stringify(data);
     //element.disabled = true;
     //element.style.display = "none";
     element.style.display = "block";
-    parseData(id);
+    parseData(element);
     element.disabled = true;
-    $('textarea').trigger('change');
 }
 
 
@@ -280,8 +278,7 @@ function readCookie() {
  *  @param    id	ID of the element in which to submit the cookie
  *
  */
-function parseData(id) {
-    var element = document.getElementById(id);
+function parseData(element) {
     var stringElement = '';
     
     for(var i = 0; i < data.sessions.length; i++) {
