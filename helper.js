@@ -255,7 +255,8 @@ function submitCookie(id) {
     element.disabled = false;
     element.style.display = "block";
     parseDate(id);
-    element.change(element);
+    element.focus();
+    document.documentElement.focus();
 }
 
 
