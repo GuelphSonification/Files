@@ -275,7 +275,7 @@ function perfomInterpolation(previous, current, fullValues) {
     
     var keep = true;
     
-    x2 += increment;
+    x2 += this.increment;
     
     while(keep) {        
         y2 = ((x2 - x1) * (y3 - y1)) / (x3 - x1) + y1; //Function to get interpolated value
@@ -287,7 +287,7 @@ function perfomInterpolation(previous, current, fullValues) {
         else if (x2 >= x3)
             keep = false;
         
-        x2 += increment;
+        x2 += this.increment;
     }
     
     fullValues.push(y3);
