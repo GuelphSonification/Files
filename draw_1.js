@@ -239,7 +239,7 @@ DrawableAudioGraph.prototype.generateJSON = function() {
     fullValues.push(this.yArr[0]);
 
     for (var i = 1; i < this.yArr.length; i++) {
-        if (Math.abs(this.yArr[i] - this.yArr[i - 1]) >= acceptable) { //in case the distance is not acceptable
+        if (Math.abs(this.yArr[i] - this.yArr[i - 1]) >= this.acceptable) { //in case the distance is not acceptable
             perfomInterpolation(this.yArr[i - 1], this.yArr[i], fullValues); //will push interpolated values
         } else {
             fullValues.push(this.yArr[i]); //in case the values are good enough
@@ -282,7 +282,7 @@ function perfomInterpolation(previous, current, fullValues) {
         
         fullValues.push(y2);
         
-        if(Math.abs(y2 - y1) <= acceptable)
+        if(Math.abs(y2 - y1) <= this.acceptable)
             keep = false;
         else if (x2 >= x3)
             keep = false;
