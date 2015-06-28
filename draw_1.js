@@ -19,8 +19,11 @@ function DrawableAudioGraph() {
     
     //define and resize canvas
     document.getElementById("content").style.height = window.innerHeight - this.offset;
-    this.canvas = '<canvas id="canvas" width="' + window.innerWidth + '" height="' + (window.innerHeight - this.offset) + '"></canvas>';
-    document.getElementById("content").innerHTML = this.canvas;
+    this.canvas = document.createElement('canvas');
+    this.canvas.id = 'canvas';
+    this.canvas.style.height = '250px';
+    this.canvas.style.width = '100%';
+    document.getElementById("content").appendChild(this.canvas);
 
     // setup canvas
     this.ctx = document.getElementById("canvas").getContext("2d");
