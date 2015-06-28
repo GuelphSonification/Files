@@ -258,7 +258,7 @@ DrawableAudioGraph.prototype.generateJSON = function() {
 /**
  * Performs interpolation.
  */
-function performInterpolation(previous, current, fullValues) {
+DrawableAudioGraph.prototype.performInterpolation = function(previous, current, fullValues) {
     /*Horizontal coordinates*/
     var x1 = 0;
     var x2 = 0;
