@@ -7,9 +7,6 @@ function DrawableAudioGraph() {
     this.lastY;
     this.lastX = 0;
 
-    this.canvasHeight = 250;
-    this.canvasWidth;
-
     this.clicked = 0;
     this.yArr = []; //will keep all the relative y coordinates
 
@@ -26,15 +23,13 @@ function DrawableAudioGraph() {
     this.canvas.style.width = '100%';
     document.getElementById("content").appendChild(this.canvas);
     this.canvas.width = this.canvas.clientWidth;
-    console.log(this.canvas.clientWidth);
-    console.log(this.canvas.width);
 
     // setup canvas
     this.ctx = document.getElementById("canvas").getContext("2d");
     this.ctx.strokeStyle = "#000";
     this.ctx.lineWidth = 5;
     this.ctx.fillStyle = "#F0F0F0";
-    this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.audioGraph;
 
@@ -61,7 +56,7 @@ DrawableAudioGraph.prototype.addTouchListeners = function() {
 
         lowX = x; //Left most x value
         bottomY = 0;
-        topY = this.canvasHeight;
+        topY = this.canvas.height;
 
         ctx.moveTo(x, y);
 
@@ -130,7 +125,7 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
         
         that.lowX = x; //Left most x value
         that.bottomY = 0;
-        that.topY = that.canvasHeight;
+        that.topY = that.canvas.height;
         
         that.ctx.moveTo(x, y);
         
