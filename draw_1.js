@@ -18,8 +18,8 @@ function DrawableAudioGraph() {
     //define and resize canvas
     this.canvas = document.createElement('canvas');
     this.canvas.id = 'canvas';
-    this.canvas.style.height = '250px';
-    this.canvas.height = 250;
+    this.canvas.style.height = '400px';
+    this.canvas.height = 400;
     this.canvas.style.width = '100%';
     document.getElementById("content").appendChild(this.canvas);
     this.canvas.width = this.canvas.clientWidth;
