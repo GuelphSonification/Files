@@ -121,12 +121,12 @@ DrawableAudioGraph.prototype.addListeners = function() {
         that.generateJSON();
     };
 
-    canvas.addEventListener("onmousedown", start, false);
-    canvas.addEventListener("ontouchstart", start, false);
-    canvas.addEventListener("onmousemove", move, false);
-    canvas.addEventListener("ontouchmove", move, false);
-    document.addEventListener("onmouseup", stop, false);
-    document.addEventListener("ontouchend", stop, false);
+    canvas.attachEvent("onmousedown", start);
+    canvas.attachEvent("ontouchstart", start);
+    canvas.attachEvent("onmousemove", move);
+    canvas.attachEvent("ontouchmove", move);
+    document.attachEvent("onmouseup", stop);
+    document.attachEvent("ontouchend", stop);
 }
 
 
