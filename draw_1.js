@@ -55,8 +55,6 @@ DrawableAudioGraph.prototype.clearCanvas = function() {
  * Input listeners, but with touch.
  */
 DrawableAudioGraph.prototype.addListeners = function() {
-    var canvas = document.getElementById("canvas");
-    
     var that = this;
 
     //When the user touches the screen
@@ -121,12 +119,12 @@ DrawableAudioGraph.prototype.addListeners = function() {
         that.generateJSON();
     };
 
-    canvas.onmousedown = start;
-    canvas.ontouchstart = start;
-    canvas.onmousemove = move;
-    canvas.ontouchmove = move;
-    document.onmouseup = stop;
-    document.ontouchend = stop;
+    this.canvas.onmousedown = start;
+    this.canvas.ontouchstart = start;
+    this.canvas.onmousemove = move;
+    this.canvas.ontouchmove = move;
+    this.canvas.onmouseup = stop;
+    this.canvas.ontouchend = stop;
 }
 
 
