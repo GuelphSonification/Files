@@ -14,8 +14,19 @@ function DrawableAudioGraph() {
     this.increment = 0.1; //step on the x value for the interpolation
 
     this.jString;
+    this.audioGraph;
     
-    //define and resize canvas
+    this.addCanvas();
+
+    // setup to trigger drawing on mouse or touch
+    this.addListeners();
+}
+
+
+/**
+ * Creates and appends the canvas for the graph.
+ */
+DrawableAudioGraph.prototype.addCanvas = function () {
     this.canvas = document.createElement('canvas');
     this.canvas.id = 'canvas';
     this.canvas.style.height = '400px';
@@ -23,19 +34,22 @@ function DrawableAudioGraph() {
     this.canvas.style.width = '100%';
     document.getElementById("content").appendChild(this.canvas);
     this.canvas.width = this.canvas.clientWidth;
-
-    // setup canvas
+    
     this.ctx = document.getElementById("canvas").getContext("2d");
     this.ctx.strokeStyle = "#000";
     this.ctx.lineWidth = 5;
     this.ctx.fillStyle = "#F0F0F0";
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-    this.audioGraph;
-
-    // setup to trigger drawing on mouse or touch
-    this.addListeners();
+    this.clearCanvas();
 }
+
+
+/**
+ * Clears the canvas to be drawn over again.
+ */
+DrawableAudioGraph.prototype.clearCanvas = function() {
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+}
+
 
 /**
  * Input listeners, but with touch.
