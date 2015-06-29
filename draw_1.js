@@ -2,10 +2,10 @@ function DrawableAudioGraph() {
     //for the screen coordinates (x, y)
     this.lowX;
     this.highX;
-    this.topY;
-    this.bottomY;
-    this.lastY;
     this.lastX = 0;
+    this.lowY;
+    this.highY;
+    this.lastY;
 
     this.clicked = 0;
     this.yArr = []; //will keep all the relative y coordinates
@@ -34,98 +34,33 @@ function DrawableAudioGraph() {
     this.audioGraph;
 
     // setup to trigger drawing on mouse or touch
-    this.addTouchListeners();
-    this.addClickListeners();
+    this.addListeners();
 }
 
-
 /**
  * Input listeners, but with touch.
  */
-DrawableAudioGraph.prototype.addTouchListeners = function() {
+DrawableAudioGraph.prototype.addListeners = function() {
     var canvas = document.getElementById("canvas");
     
     var that = this;
-         
+
     //When the user touches the screen
     var start = function(e) {
         that.clicked = 1;
         that.ctx.beginPath();
-        var x = e.changedTouches[0].pageX - this.offsetLeft;
-        var y = e.changedTouches[0].pageY - this.offsetTop;
-
-        lowX = x; //Left most x value
-        bottomY = 0;
-        topY = this.canvas.height;
-
-        ctx.moveTo(x, y);
-
-        lastY = y;
-    };
-    
-    //According to the user's move, it will save the coordinates
-    var move = function(e) {
-        if (that.clicked) {
-            e.preventDefault();
-
+  
+        if (e.type === "mousedown") {
+            var x = e.pageX - this.offsetLeft;
+            var y = e.pageY - this.offsetTop;
+        } else if (e.type === "touchstart") {
             var x = e.changedTouches[0].pageX - this.offsetLeft;
             var y = e.changedTouches[0].pageY - this.offsetTop;
-
-            if (x >= lastX) {
-                that.ctx.lineTo(x, y);
-                that.ctx.stroke();
-
-                that.highX = x; //This will be the right most x value
-                
-                //This part is to keep track of the lowest and highest y values
-                if (y > bottomY)
-                    that.bottomY = y;
-                if (y < topY)
-                    that.topY = y;
-
-                lastX = x;
-
-                if (Math.abs(lastY - y) >= 0.001) //Not to push too close values    
-                    yArr.push(y);
-            }
         }
-    };
-    
-    //Will remove the listener components when the user stops the movements
-    var stop = function(e) {
-        that.clicked = 0;
-        canvas.removeEventListener("touchstart", start, false); //Start listener
-        canvas.removeEventListener("touchmove", move, false); //Move listener
-        document.removeEventListener("touchend", stop, false); //end
-        that.sonify();
-        that.generateJSON();
-    };
-
-    //Will add listener components
-    canvas.addEventListener("touchstart", start, false); //Start listener
-    canvas.addEventListener("touchmove", move, false); //move listener
-    document.addEventListener("touchend", stop, false); //end
-};
-
-
-/**
- * Input listeners, but with touch.
- */
-DrawableAudioGraph.prototype.addClickListeners = function() {
-    var canvas = document.getElementById("canvas");
-    
-    var that = this;
-
-    //When the user touches the screen
-    var start = function(e) {
-        that.clicked = 1;
-        that.ctx.beginPath();
-        var x = e.pageX - this.offsetLeft;
-        var y = e.pageY - this.offsetTop;
         
         that.lowX = x; //Left most x value
-        that.bottomY = 0;
-        that.topY = that.canvas.height;
+        that.lowY = 0;
+        that.highY = that.canvas.height;
         
         that.ctx.moveTo(x, y);
         
@@ -135,8 +70,14 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
     //According to the user's move, it will save the coordinates
     var move = function(e) {
         if (that.clicked) {
-            var x = e.pageX - this.offsetLeft;
-            var y = e.pageY - this.offsetTop;
+            if (e.type === "mousemove") {
+                var x = e.pageX - this.offsetLeft;
+                var y = e.pageY - this.offsetTop;
+            } else if (e.type === "touchmove") {
+                e.preventDefault();
+                var x = e.changedTouches[0].pageX - this.offsetLeft;
+                var y = e.changedTouches[0].pageY - this.offsetTop;
+            }
 
             if (x >= that.lastX) {
                 that.ctx.lineTo(x, y);
@@ -145,10 +86,10 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
                 that.highX = x; //This will be the right most x value
                 
                 //This part is to keep track of the lowest and highest y values
-                if (y > that.bottomY)
-                    that.bottomY = y;
-                if (y < that.topY)
-                    that.topY = y;
+                if (y > that.lowY)
+                    that.lowY = y;
+                if (y < that.highY)
+                    that.highY = y;
 
                 that.lastX = x;
 
@@ -161,16 +102,16 @@ DrawableAudioGraph.prototype.addClickListeners = function() {
 
     var stop = function(e) {
         that.clicked = 0;
-        canvas.removeEventListener("mousedown", start, false); //Start listener
-        canvas.removeEventListener("mousemove", move, false); //Move listener
-        document.removeEventListener("mouseup", stop, false); //end
         that.sonify();
         that.generateJSON();
     };
 
     canvas.addEventListener("mousedown", start, false); //Start listener
+    canvas.addEventListener("touchstart", start, false); //Start listener
     canvas.addEventListener("mousemove", move, false); //move listener
+    canvas.addEventListener("touchmove", move, false); //move listener
     document.addEventListener("mouseup", stop, false); //stop listener
+    document.addEventListener("touchend", stop, false); //end
 }
 
 
@@ -186,22 +127,22 @@ DrawableAudioGraph.prototype.sonify = function() {
     ctxRec.strokeStyle = "#0066FF";
     ctxRec.lineWidth = 2;
     ctxRec.fillStyle = "#F0F0F0";
-    ctxRec.rect(this.lowX, this.topY, this.highX - this.lowX, this.bottomY - this.topY);
+    ctxRec.rect(this.lowX, this.highY, this.highX - this.lowX, this.lowY - this.highY);
     ctxRec.stroke();
 
-    var distY = this.bottomY - this.topY; //Vertical distance
+    var distY = this.lowY - this.highY; //Vertical distance
     var distX = this.highX - this.lowX; //Horizontal distance
 
     //Will draw horizontal line inside the rectangle
     ctxRec.beginPath();
-    ctxRec.moveTo(this.lowX, this.topY + distY / 2); 
-    ctxRec.lineTo(this.highX, this.topY + distY / 2);
+    ctxRec.moveTo(this.lowX, this.highY + distY / 2); 
+    ctxRec.lineTo(this.highX, this.highY + distY / 2);
     ctxRec.stroke();
 
     //Will draw vertical line inside the rectangle
     ctxRec.beginPath();
-    ctxRec.moveTo(this.lowX + distX / 2, this.bottomY);
-    ctxRec.lineTo(this.lowX + distX / 2, this.topY);
+    ctxRec.moveTo(this.lowX + distX / 2, this.lowY);
+    ctxRec.lineTo(this.lowX + distX / 2, this.highY);
     ctxRec.stroke();
 }
 
@@ -210,9 +151,9 @@ DrawableAudioGraph.prototype.sonify = function() {
  * Generates the JSON object to be sonified.
  */
 DrawableAudioGraph.prototype.generateJSON = function() {
-    var norm = Math.abs(this.bottomY - this.topY); //Distance between lowest and highest points
+    var norm = Math.abs(this.lowY - this.highY); //Distance between lowest and highest points
 
-    var xAxis = norm / 2 + this.topY; //Reference of the horizontal axis
+    var xAxis = norm / 2 + this.highY; //Reference of the horizontal axis
 
     var minVal = 0;
     var maxVal = 0;
