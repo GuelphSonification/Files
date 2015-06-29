@@ -62,6 +62,7 @@ DrawableAudioGraph.prototype.addListeners = function() {
     //When the user touches the screen
     var start = function(e) {
         that.clicked = 1;
+        that.clearCanvas();
         that.ctx.beginPath();
   
         if (e.type === "mousedown") {
