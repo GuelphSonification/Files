@@ -61,6 +61,7 @@ DrawableAudioGraph.prototype.addListeners = function() {
     var start = function(e) {
         that.clicked = 1;
         that.clearCanvas();
+        that.ctx.strokeStyle = "#000";
         that.ctx.beginPath();
   
         if (e.type === "mousedown") {
