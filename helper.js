@@ -81,6 +81,7 @@ function addAudioGraph(expression, duration, div) {
             }, duration*1000);
         }
     };
+    writeStyle();
 
     container.appendChild(button);
 }
@@ -115,7 +116,6 @@ function addDrawableAudioGraph(expression, div) {
             }, duration*1000);
         }
     };
-    writeStyle();
 
     container.appendChild(button);
 }
@@ -150,7 +150,6 @@ function writeStyle() {
                 "border-radius: 5px;",
                 "cursor: pointer;",
                 "padding-left: 0.4em;",
-                "width: 2.5em;",
             "}",
         "</style>"].join('\n');
     document.write(text);
