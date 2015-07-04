@@ -1,4 +1,4 @@
-function DrawableAudioGraph() {
+function DrawableAudioGraph(div) {
     //for the screen coordinates (x, y)
     this.lowX;
     this.highX;
@@ -16,7 +16,7 @@ function DrawableAudioGraph() {
     this.jString;
     this.audioGraph;
     
-    this.addCanvas();
+    this.addCanvas(div);
 
     // setup to trigger drawing on mouse or touch
     this.addListeners();
@@ -26,13 +26,13 @@ function DrawableAudioGraph() {
 /**
  * Creates and appends the canvas for the graph.
  */
-DrawableAudioGraph.prototype.addCanvas = function () {
+DrawableAudioGraph.prototype.addCanvas = function (div) {
     this.canvas = document.createElement('canvas');
     this.canvas.id = 'canvas';
     this.canvas.style.height = '400px';
     this.canvas.height = 400;
     this.canvas.style.width = '100%';
-    document.getElementById("content").appendChild(this.canvas);
+    document.getElementById(div).appendChild(this.canvas);
     this.canvas.width = this.canvas.clientWidth;
     
     this.ctx = document.getElementById("canvas").getContext("2d");

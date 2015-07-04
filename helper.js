@@ -67,7 +67,7 @@ function addAudioGraph(expression, duration, div) {
     loadDing(temp);
 
     var button = document.createElement("h3");
-    button.innerHTML = "Play";
+    button.innerHTML = "Play Question";
     button.id = expression;
     button.className = "PlayButton";
     button.onclick = function() { // Note this is a function
@@ -75,6 +75,41 @@ function addAudioGraph(expression, duration, div) {
             playing = 1;
             document.getElementById(expression).className = "PlayButtonDeactivated";
             audioGraph.play(duration);
+            setTimeout(function(){
+                playing = 0;
+                document.getElementById(expression).className = "PlayButton";
+            }, duration*1000);
+        }
+    };
+    writeStyle();
+
+    container.appendChild(button);
+}
+
+
+/**
+ * Creates a new audio graph object based on the function specified.
+ * Creates a button to play the audio graph.
+ *
+ * @param	div			div to create the HTML elements in
+ */
+function addDrawableAudioGraph(div) {
+    audioGraph = new DrawableAudioGraph(div);
+    var container = document.getElementById(div);
+
+    function tempFunc() { this.ding = null; this.onDone = function(ding) { audioGraph.ding = ding; }; } 
+    temp = new tempFunc();
+    loadDing(temp);
+
+    var button = document.createElement("h3");
+    button.innerHTML = "Play Graph";
+    button.id = expression;
+    button.className = "PlayButton";
+    button.onclick = function() { // Note this is a function
+        if (!playing) {
+            playing = 1;
+            document.getElementById(expression).className = "PlayButtonDeactivated";
+            audioGraph.audioGraph.play(3);
             setTimeout(function(){
                 playing = 0;
                 document.getElementById(expression).className = "PlayButton";
