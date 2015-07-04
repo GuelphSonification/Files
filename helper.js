@@ -93,7 +93,7 @@ function addAudioGraph(expression, duration, div) {
  *
  * @param	div			div to create the HTML elements in
  */
-function addDrawableAudioGraph(expression, div) {
+function addDrawableAudioGraph(expression, duration, div) {
     drawableAudioGraph = new DrawableAudioGraph(div);
     var container = document.getElementById(div);
 
