@@ -32,7 +32,7 @@ DrawableAudioGraph.prototype.addCanvas = function (div) {
     this.canvas.style.height = '400px';
     this.canvas.height = 400;
     this.canvas.style.width = '100%';
-    document.getElementById(div).appendChild(this.canvas);
+    document.getElementById(div+'-canvas').appendChild(this.canvas);
     this.canvas.width = this.canvas.clientWidth;
     
     this.ctx = document.getElementById("canvas").getContext("2d");

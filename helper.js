@@ -81,7 +81,6 @@ function addAudioGraph(expression, duration, div) {
             }, duration*1000);
         }
     };
-    writeStyle();
 
     container.appendChild(button);
 }
