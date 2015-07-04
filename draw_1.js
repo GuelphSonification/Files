@@ -16,7 +16,7 @@ function DrawableAudioGraph(duration, div) {
     this.jString;
     this.audioGraph;
     this.ding;
-    this.duration;
+    this.duration = duration;
     
     this.addCanvas(div);
 
