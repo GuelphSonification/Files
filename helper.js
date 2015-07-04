@@ -137,7 +137,6 @@ function writeStyle() {
                 "border-radius: 5px;",
                 "cursor: pointer;",
                 "padding-left: 0.4em;",
-                "width: 2.5em;",
             "}",
             "h3.PlayButton:hover {",
                 "background-color: white;",
