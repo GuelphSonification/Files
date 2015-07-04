@@ -105,6 +105,7 @@ function addDrawableAudioGraph(expression, div) {
     button.innerHTML = "Play Graph";
     button.id = "draw"+expression;
     button.className = "PlayButton";
+    button.style.display = 'block';
     button.onclick = function() { // Note this is a function
         if (!playing) {
             playing = 1;
