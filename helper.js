@@ -103,7 +103,6 @@ function addDrawableAudioGraph(div) {
 
     var button = document.createElement("h3");
     button.innerHTML = "Play Graph";
-    button.id = expression;
     button.className = "PlayButton";
     button.onclick = function() { // Note this is a function
         if (!playing) {
