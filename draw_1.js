@@ -1,4 +1,4 @@
-function DrawableAudioGraph(div) {
+function DrawableAudioGraph(duration, div) {
     //for the screen coordinates (x, y)
     this.lowX;
     this.highX;
@@ -15,6 +15,8 @@ function DrawableAudioGraph(div) {
 
     this.jString;
     this.audioGraph;
+    this.ding;
+    this.duration;
     
     this.addCanvas(div);
 
@@ -209,8 +211,8 @@ DrawableAudioGraph.prototype.generateJSON = function() {
     console.log(fullValues);
 
     this.audioGraph = new AudioGraph({type: "RAW", value: jsonString});
-
-    this.audioGraph.play(3);
+    this.audioGraph.ding = this.ding;
+    this.audioGraph.play(this.duration);
 }
 
 
