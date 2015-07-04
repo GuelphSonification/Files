@@ -2,13 +2,13 @@ function DrawableAudioGraph() {
     //for the screen coordinates (x, y)
     this.lowX;
     this.highX;
-    this.lastX = 0;
+    this.lastX;
     this.lowY;
     this.highY;
     this.lastY;
 
     this.clicked = 0;
-    this.yArr = []; //will keep all the relative y coordinates
+    this.yArr; //will keep all the relative y coordinates
 
     this.acceptable = 0.001; //Maximum distance between two y values
     this.increment = 0.1; //step on the x value for the interpolation
@@ -74,10 +74,12 @@ DrawableAudioGraph.prototype.addListeners = function() {
         that.lowX = x; //Left most x value
         that.lowY = 0;
         that.highY = that.canvas.height;
+        that.yArr = [];
         
         that.ctx.moveTo(x, y);
         
         that.lastY = y;
+        that.lastX = 0;
     };
     
     //According to the user's move, it will save the coordinates
