@@ -103,16 +103,16 @@ function addDrawableAudioGraph(expression, div) {
 
     var button = document.createElement("h3");
     button.innerHTML = "Play Graph";
-    button.id = expression;
+    button.id = "draw"+expression;
     button.className = "PlayButton";
     button.onclick = function() { // Note this is a function
         if (!playing) {
             playing = 1;
-            document.getElementById(expression).className = "PlayButtonDeactivated";
+            document.getElementById("draw"+expression).className = "PlayButtonDeactivated";
             drawableAudioGraph.audioGraph.play(3);
             setTimeout(function(){
                 playing = 0;
-                document.getElementById(expression).className = "PlayButton";
+                document.getElementById("draw"+expression).className = "PlayButton";
             }, duration*1000);
         }
     };
