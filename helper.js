@@ -153,6 +153,8 @@ function writeStyle() {
                 "border-radius: 5px;",
                 "cursor: pointer;",
                 "padding-left: 0.4em;",
+                "width: 25%;",
+                "text-align: center;",
             "}",
         "</style>"].join('\n');
     document.write(text);
