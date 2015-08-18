@@ -125,6 +125,7 @@ DrawableAudioGraph.prototype.addListeners = function() {
           that.sonify();
         }
         that.generateJSON();
+        updateDrawCount();
     };
 
     this.canvas.onmousedown = start;
