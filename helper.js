@@ -38,7 +38,7 @@ function validBrowser() {
         nav = "Opera";
     } else if (is_explorer) {
         alert("Please, use another browser!");
-        exit;
+        exit();
     }
 
     return 1;
@@ -318,6 +318,9 @@ function parseData(element) {
     for(var i = 0; i < data.sessions.length; i++) {
         stringElement += "Graph: " + data.sessions[i].graph;
         stringElement += "; Replays: " + data.sessions[i].replays;
+        if (data.sessions[i].draws) {
+          stringElement += "; Draws: " + data.sessions[i].draws;
+        }
         stringElement += "; Total time: " + data.sessions[i].totalTime / 1000; //Converting to seconds
         stringElement += " - ";
     }
