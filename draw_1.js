@@ -18,6 +18,7 @@ function DrawableAudioGraph(duration, div) {
     this.ding;
     this.duration = duration;
     
+    this.showGraph = true;
     this.addCanvas(div);
 
     // setup to trigger drawing on mouse or touch
@@ -120,7 +121,9 @@ DrawableAudioGraph.prototype.addListeners = function() {
 
     var stop = function(e) {
         that.clicked = 0;
-        that.sonify();
+        if (that.showGraph) {
+          that.sonify();
+        }
         that.generateJSON();
     };
 
