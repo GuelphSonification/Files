@@ -26,7 +26,7 @@ function bakeCookie() {
  * (Currently unused, keeping for future need/reference.)
  */
 function deleteCookie() {
-  document.cookie = ["SonificationMetricData=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; domain=.", window.location.host.toString()].join('');
+    document.cookie = ["SonificationMetricData=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; domain=.", window.location.host.toString()].join('');
 }
 
 
@@ -39,12 +39,13 @@ function deleteCookie() {
  * @param	id	ID of the element in which to submit the cookie
  */
 function submitCookie(id) {
-  var element = document.getElementById(id);
-  element.value = JSON.stringify(data);
-  //element.disabled = true;
-  //element.style.display = "none";
-  element.disabled = true;
-  element.style.display = "block";
+    var element = document.getElementById(id);
+    //element.value = JSON.stringify(data);
+    //element.disabled = true;
+    //element.style.display = "none";
+    element.disabled = false;
+    element.style.display = "block";
+    parseDate(id);
 }
 
 
@@ -55,17 +56,35 @@ function submitCookie(id) {
  * (Called each time a graph is loaded.)
  */
 function readCookie() {
- var result = document.cookie.match(new RegExp("SonificationMetricData=([^;]+)"));
- if (result && (result = JSON.parse(result[1])))
- {
-  data = result;
- }
- else
- {
-  data = {"sessions":[]};
- }
+    var result = document.cookie.match(new RegExp("SonificationMetricData=([^;]+)"));
+    if (result && (result = JSON.parse(result[1]))) {
+        data = result;
+    } else {
+        data = {"sessions":[]};
+    }
 }
 
+/**
+ * Parses the 'data' string, with the contents of the cookie
+ *  @param    id	ID of the element in which to submit the cookie
+ *
+ */
+function parseDate(id) {
+    var element = document.getElementById(id);
+    var stringElement;
+    
+    element.value = "";
+    
+    for(var i = 0; i < data.sessions.length; i++) {
+        stringElement = "Graph: " + data.sessions[i].graph;
+        stringElement += "; Replays: " + data.sessions[i].replays;
+        stringElement += "; Total time: " + data.sessions[i].totalTime / 1000; //Converting to seconds
+        stringElement += " - ";
+        
+        element.value += stringElement;
+        element.disabled = true;
+    }
+}
 
 
 
@@ -85,9 +104,10 @@ function initQuestion(name) {
   var date = new Date();
 
   session = {
-	"graph"		: name,				// Name of graph (i.e., "f1")
-	"startTime"	: date.getTime(),	// Time the user loaded the page (in milliseconds since 01/01/1970)
-	"replays"	: 0					// Number of times the sound is played
+    graph: name,  // Name of graph (i.e., "f1")
+    startTime: date.getTime(),  // Time the user loaded the page (in milliseconds since 01/01/1970)
+    replays: 0, // Number of times the sound is played
+    draws: null // Number of times the user has drawn an interactive graph, if applicable.
   };
 
   data.sessions.push(session);
@@ -114,4 +134,20 @@ function updateQuestion() {
   data.sessions[num].totalTime = data.sessions[num].endTime - data.sessions[num].startTime;
 
   bakeCookie();
+}
+
+
+/**
+ * Iterates the graph draws counter.
+ *
+ * (Called each time a graph is drawn.)
+ */
+function updateDrawCount() {
+  var num = data.sessions.length - 1;	// Current graph is most recent in array.
+
+  if (data.sessions[num].draws) {
+    data.sessions[num].draws += 1;
+  } else {
+    data.sessions[num].draws = 1;
+  }
 }
